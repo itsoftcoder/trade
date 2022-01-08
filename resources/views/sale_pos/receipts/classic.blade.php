@@ -35,7 +35,7 @@
 		}
 		
 		.page-alternate {
-			width: 720px;
+			/* width: 720px; */
 			/*height:100vh;*/
 		}
 
@@ -195,10 +195,10 @@ function numberTowords($num)
 			@endif
 		</div>
 	
-	<div class="d-flex justify-content-between">
-		<div class="bg-primary text-light mb-3" style="margin-bottom: 5px; border: 1px solid black;">
+	<div class="d-flex justify-content-between mb-3">
+		<div class="bg-primary text-light">
 			<!-- Invoice  number, Date  -->
-			<p style="width: 100% !important; font-size: 14px; background:blue; color:white;" class="word-wrap" style="">
+			<p style="width: 100% !important; font-size: 14px;" class="word-wrap">
 				<span class="pull-left text-left word-wrap" style="margin-bottom:0px;">
 					@if(!empty($receipt_details->invoice_no_prefix))
 					<b>{!! $receipt_details->invoice_no_prefix !!}</b>
@@ -352,8 +352,8 @@ function numberTowords($num)
 			</p>
 		</div>
 		
-		<div class="bg-primary text-light mb-3">
-			<p style="width: 100% !important; font-size: 14px; background:blue; color:white;" class="word-wrap" style="">
+		<div class="bg-primary text-light">
+			<p style="width: 100% !important; font-size: 14px;" class="word-wrap">
 				<span class="pull-left text-left word-wrap" style="margin-bottom:0px;">
 					@if(!empty($receipt_details->invoice_no_prefix))
 					<b>{!! $receipt_details->invoice_no_prefix !!}</b>
