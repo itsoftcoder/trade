@@ -393,7 +393,10 @@ function numberTowords($num)
 					{{-- <b style="margin-bottom:0px; ">{!! $receipt_details->customer_info !!}</b>  --}}
 					<b>عميل بدون حجز</b><br>
 					<b>التليفون المحمول : </b><br>
-					<b>ضريبة<b>
+					@if(!empty($receipt_details->customer_tax_label))
+					<b>ضريبة<b> : {{ $receipt_details->customer_tax_number }}
+					@endif
+					
 					@endif
 					@if(!empty($receipt_details->client_id_label))
 					<br />
