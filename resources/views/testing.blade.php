@@ -9,5 +9,13 @@
 <body>
     <h1>this is testing perpose</h1>
     <p>Testing</p>
+    @include('includes.number-to-word')
+    <?php 
+    
+    $obj = new NumberToWords();
+
+    echo $obj->convert(586.56, "SAR");
+    
+    ?>
 </body>
 </html>

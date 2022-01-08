@@ -24,6 +24,7 @@ final class Versions
      */
     public const VERSIONS          = array (
   'aloha/twilio' => '4.0.4@d4174bbcb8caa41188088612f672677a0d3a3321',
+  'amirsanni/number-to-words' => 'dev-master@327d1f8fed3a24bf2015c379b95260901bd5c56a',
   'anahkiasen/underscore-php' => '2.0.0@48f97b295c82d99c1fe10d8b0684c43f051b5580',
   'arcanedev/log-viewer' => '4.7.3@bb7bbce12d6220edff8bb4a2e45d1210cb4e08b6',
   'arcanedev/support' => '4.5.0@2bb6e901404a12caa440520676b6507569d20715',
@@ -192,7 +193,7 @@ final class Versions
   'webmozart/assert' => '1.10.0@6964c76c7804814a842473e0c8fd15bab0f18e25',
   'windwalker/renderer' => '3.5.23@b157f2832dac02209db032cb61e21b8264ee4499',
   'windwalker/structure' => '3.5.23@59466adb846685d60463f9c1403df2832d2fcf90',
-  'laravel/laravel' => 'No version set (parsed as 1.0.0)@',
+  'laravel/laravel' => 'dev-main@77e66a1467e90a77c77ec0d712211b9dc3aca5d4',
 );
 
     private function __construct()
