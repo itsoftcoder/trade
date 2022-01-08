@@ -189,6 +189,9 @@ function numberTowords($num)
 				<br>
 				فاتورة
 			</h3>
+			<h5>
+				<b>{{$receipt_details->date_label}}</b> {{$receipt_details->invoice_date}}
+			</h5>
 			@endif
 		</div>
 		
@@ -254,7 +257,7 @@ function numberTowords($num)
 				</span>
 
 				<span class="pull-right text-left" style="font-size: 14px;">
-					<b>{{$receipt_details->date_label}}</b> {{$receipt_details->invoice_date}}
+					{{-- <b>{{$receipt_details->date_label}}</b> {{$receipt_details->invoice_date}} --}}
 
 					@if(!empty($receipt_details->due_date_label))
 					<br><b>{{$receipt_details->due_date_label}}</b> {{$receipt_details->due_date ?? ''}}
@@ -350,13 +353,13 @@ function numberTowords($num)
 		
 		<div class="col-md-6 bg-primary text-light">
 		    <!-- Address -->
-			<p style="font-size: 16px;border-bottom: 1px solid #d6d6d6">
-				@if(!empty($receipt_details->address))
+			{{-- <p style="font-size: 16px;border-bottom: 1px solid #d6d6d6"> --}}
+				{{-- @if(!empty($receipt_details->address)) --}}
 				{{-- <small class="text-center">--}}
-				{!! $receipt_details->address !!}
+				{{-- {!! $receipt_details->address !!} --}}
 				{{-- </small>--}}
-				@endif
-				@if(!empty($receipt_details->contact))
+				{{-- @endif --}}
+				{{-- @if(!empty($receipt_details->contact))
 				<br />{!! $receipt_details->contact !!}
 				@endif
 				@if(!empty($receipt_details->contact) && !empty($receipt_details->website))
@@ -394,7 +397,7 @@ function numberTowords($num)
 				@if(!empty($receipt_details->tax_info2))
 				<b>{{ $receipt_details->tax_label2 }}</b> {{ $receipt_details->tax_info2 }}
 				@endif
-			</p>
+			</p> --}}
 		</div>
 
 
@@ -629,7 +632,7 @@ function numberTowords($num)
 						
 					
 						<div class="row">
-							<div class="col-xs-6" style="border:1px solid black;">
+							<div class="col-xs-6">
 							    <table class="table table-slim" border="1">
 							     <tr>
 								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;">{!! $receipt_details->subtotal_label !!}</td>
@@ -698,7 +701,7 @@ function numberTowords($num)
 								<!--</table>-->
 							</div>
 
-							<div class="col-xs-6" style="border:1px solid black;">
+							<div class="col-xs-6">
 							    <table class="table table-slim" border="1">
 							        <tr>
 								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;"> المجموع الفرعي</td>
