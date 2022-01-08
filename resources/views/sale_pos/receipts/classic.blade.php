@@ -197,9 +197,9 @@ function numberTowords($num)
 		</div>
 	
 
-		<div class="bg-primary text-light col-xl-6">
+		<div class="col-xs-6">
 			<!-- Invoice  number, Date  -->
-			<p style="width: 100% !important; font-size: 14px;">
+			<div style="width: 100% !important; font-size: 14px;" class="word-wrap">
 				<span class="" style="margin-bottom:0px;">
 					@if(!empty($receipt_details->invoice_no_prefix))
 					<b>{!! $receipt_details->invoice_no_prefix !!}</b>
@@ -235,7 +235,7 @@ function numberTowords($num)
 
 					<!-- customer info -->
 					@if(!empty($receipt_details->customer_info))
-					<b style="margin-bottom:0px;">{!! $receipt_details->customer_info !!}</b> 
+					<b style="margin-bottom:0px; margin-right:10px;">{!! $receipt_details->customer_info !!}</b> 
 					@endif
 					@if(!empty($receipt_details->client_id_label))
 					<br />
@@ -350,11 +350,11 @@ function numberTowords($num)
 					<strong>@lang('lang_v1.order_dates'):</strong> {!!$receipt_details->sale_orders_invoice_date ?? ''!!}
 					@endif --}}
 				{{-- </span> --}}
-			</p>
+			</div>
 		</div>
 		
-		<div class="bg-primary text-light col-xl-6">
-			<p style="width: 100% !important; font-size: 14px;" class="word-wrap">
+		<div class="col-xs-6">
+			<div style="width: 100% !important; font-size: 14px;" class="word-wrap">
 				<span class="" style="margin-bottom:0px;">
 					@if(!empty($receipt_details->invoice_no_prefix))
 					<b>{!! $receipt_details->invoice_no_prefix !!}</b>
@@ -390,7 +390,7 @@ function numberTowords($num)
 
 					<!-- customer info -->
 					@if(!empty($receipt_details->customer_info))
-					<b style="margin-bottom:0px;">{!! $receipt_details->customer_info !!}</b> 
+					<b style="margin-bottom:0px; ">{!! $receipt_details->customer_info !!}</b> 
 					@endif
 					@if(!empty($receipt_details->client_id_label))
 					<br />
@@ -421,7 +421,7 @@ function numberTowords($num)
 
 				
 				{{-- </span> --}}
-			</p>
+			</div>
 			<!-- Address -->
 			{{-- <p style="font-size: 16px;border-bottom: 1px solid #d6d6d6"> --}}
 				{{-- @if(!empty($receipt_details->address)) --}}
