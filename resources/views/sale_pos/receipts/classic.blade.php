@@ -196,11 +196,11 @@ function numberTowords($num)
 			@endif
 		</div>
 	
-	<div class="d-flex justify-content-between mb-3">
-		<div class="bg-primary text-light mr-5">
+
+		<div class="bg-primary text-light col-xl-6">
 			<!-- Invoice  number, Date  -->
-			<p style="width: 100% !important; font-size: 14px;" class="word-wrap">
-				<span class="pull-left text-left word-wrap" style="margin-bottom:0px;">
+			<p style="width: 100% !important; font-size: 14px;">
+				<span class="" style="margin-bottom:0px;">
 					@if(!empty($receipt_details->invoice_no_prefix))
 					<b>{!! $receipt_details->invoice_no_prefix !!}</b>
 					@endif
@@ -353,9 +353,9 @@ function numberTowords($num)
 			</p>
 		</div>
 		
-		<div class="bg-primary text-light">
+		<div class="bg-primary text-light col-xl-6">
 			<p style="width: 100% !important; font-size: 14px;" class="word-wrap">
-				<span class="pull-left text-left word-wrap" style="margin-bottom:0px;">
+				<span class="" style="margin-bottom:0px;">
 					@if(!empty($receipt_details->invoice_no_prefix))
 					<b>{!! $receipt_details->invoice_no_prefix !!}</b>
 					@endif
@@ -469,7 +469,7 @@ function numberTowords($num)
 				@endif
 			</p> --}}
 		</div>
-	</div>
+
 		
 	</div>
 
