@@ -189,7 +189,7 @@ function numberTowords($num)
 				<br>
 				فاتورة
 			</h3>
-			<h5>
+			<h5 style="margin-bottom: 0px;">
 				<b>{{$receipt_details->date_label}}</b> {{$receipt_details->invoice_date}}
 			</h5>
 			@endif
@@ -636,18 +636,18 @@ function numberTowords($num)
 							    <table class="table table-slim" border="1">
 							     <tr>
 								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;">{!! $receipt_details->subtotal_label !!}</td>
-								    <td  style="text-align:right; font-weight:bold;">{{ $total_taxable_amount }}</td>
+								    <td  style="text-align:right; font-weight:bold; border-top:1px solid black;">{{ $total_taxable_amount }}</td>
 								</tr>
 								
 								<tr>
-								    <td  style="text-align:right;font-weight:bold;">Tax ({{ $receipt_details->tax_amount }} Percent Vat):</td>
-								    <td  style="text-align:right; font-weight:bold;">{{ $total_tax_amount }}</td>
+								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;">Tax ({{ $receipt_details->tax_amount }} Percent Vat):</td>
+								    <td  style="text-align:right; font-weight:bold; border-top:1px solid black;">{{ $total_tax_amount }}</td>
 								
 								</tr>
 								
 									<tr>
-								    <td  style="text-align:right;font-weight:bold;">{!! $receipt_details->total_label !!} </td>
-								    <td  style="text-align:right; font-weight:bold;">{{ $total_amount }} </td>
+								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;">{!! $receipt_details->total_label !!} </td>
+								    <td  style="text-align:right; font-weight:bold; border-top:1px solid black;">{{ $total_amount }} </td>
 								    
 								</tr>
 								
@@ -707,25 +707,25 @@ function numberTowords($num)
 								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;"> المجموع الفرعي</td>
 
 								    
-								    <td style="font-weight:bold;text-align:right;">
+								    <td style="font-weight:bold;text-align:right; border-top:1px solid black;">
 								        {{ str_replace($western_arabic, $eastern_arabic, $total_taxable_amount) }}
 								    </td>
 								</tr>
 								
 								<tr>
-								    <td style="text-align:right;font-weight:bold;">الضريبة (15 بال{{ $receipt_details->tax_amount  }}ئة ضريبة القيمة المضافة):</td>
+								    <td style="text-align:right;font-weight:bold; border-top:1px solid black;">الضريبة (15 بال{{ $receipt_details->tax_amount  }}ئة ضريبة القيمة المضافة):</td>
 								  
 								    
-								    <td  style="font-weight:bold;text-align:right;">
+								    <td  style="font-weight:bold;text-align:right; border-top:1px solid black;">
 								        {{ str_replace($western_arabic, $eastern_arabic, $total_tax_amount) }}
 								    </td>
 								</tr>
 								
 								<tr>
-								    <td style="text-align:right;font-weight:bold;"> مجموع</td>
+								    <td style="text-align:right;font-weight:bold; border-top:1px solid black;"> مجموع</td>
 							
 								    
-								    <td style="font-weight:bold;text-align:right;">
+								    <td style="font-weight:bold;text-align:right; border-top:1px solid black;">
 								        {{ str_replace($western_arabic, $eastern_arabic, $total_amount) }}
 								    </td>
 								</tr>
