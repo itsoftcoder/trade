@@ -199,7 +199,7 @@ function numberTowords($num)
 
 		<div class="col-xs-6">
 			<!-- Invoice  number, Date  -->
-			<div style="width: 100% !important; font-size: 14px;border:1px solid black;" class="word-wrap text-left">
+			<div style="width: 100% !important; font-size: 14px;" class="word-wrap text-left">
 				<span class="" style="margin-bottom:0px;">
 					@if(!empty($receipt_details->invoice_no_prefix))
 					<b>{!! $receipt_details->invoice_no_prefix !!}</b>
@@ -354,10 +354,10 @@ function numberTowords($num)
 		</div>
 		
 		<div class="col-xs-6">
-			<div style="width: 100% !important; font-size: 14px; border:1px solid black;" class="word-wrap text-right">
+			<div style="width: 100% !important; font-size: 14px;" class="word-wrap text-right">
 				<span class="" style="margin-bottom:0px;">
 					@if(!empty($receipt_details->invoice_no_prefix))
-					<b>{!! $receipt_details->invoice_no_prefix !!}</b>
+					<b>رقم الفاتورة</b>
 					@endif
 					{{$receipt_details->invoice_no}}
 
@@ -390,7 +390,10 @@ function numberTowords($num)
 
 					<!-- customer info -->
 					@if(!empty($receipt_details->customer_info))
-					<b style="margin-bottom:0px; ">{!! $receipt_details->customer_info !!}</b> 
+					{{-- <b style="margin-bottom:0px; ">{!! $receipt_details->customer_info !!}</b>  --}}
+					<b>عميل بدون حجز</b><br>
+					<b>التليفون المحمول : </b><br>
+					<b>ضريبة<b>
 					@endif
 					@if(!empty($receipt_details->client_id_label))
 					<br />
