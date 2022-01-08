@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +14,12 @@
 */
 
 //include_once('install_r.php');
+
+
+
+Route::get('/testing',function(){
+    return view('testing');
+});
 
 Route::middleware(['setData'])->group(function () {
     /*Route::get('/', function () {
