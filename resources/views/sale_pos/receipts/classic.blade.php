@@ -398,14 +398,14 @@ function numberTowords($num)
 					@endif
 					
 					@endif
-					@if(!empty($receipt_details->client_id_label))
+					{{-- @if(!empty($receipt_details->client_id_label))
 					<br />
 					<b>{{ $receipt_details->client_id_label }}</b> {{ $receipt_details->client_id }}
-					@endif
-					@if(!empty($receipt_details->customer_tax_label))
+					@endif --}}
+					{{-- @if(!empty($receipt_details->customer_tax_label))
 					<br />
 					<b style="margin-top:0px !important!;">{{ $receipt_details->customer_tax_label }}</b> {{ $receipt_details->customer_tax_number }}
-					@endif
+					@endif --}}
 					{{-- @if(!empty($receipt_details->customer_custom_fields))
 					<br />{!! $receipt_details->customer_custom_fields !!}
 					@endif
