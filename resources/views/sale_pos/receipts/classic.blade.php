@@ -184,12 +184,12 @@ function numberTowords($num)
 		<div class="col-12">
 		    <!-- Title of receipt -->
 			@if(!empty($receipt_details->invoice_heading))
-			<h3 class="text-center" style="margin-top: 0;margin-bottom:5px;">
+			<h3 class="text-center" style="margin-top: 0; margin-bottom:5px;">
 				{!! $receipt_details->invoice_heading !!}
 				<br>
 				فاتورة
 			</h3>
-			<h5 style="margin-bottom: 0px;">
+			<h5 style="margin-bottom: 0; margin-top:2px;">
 				<b>{{$receipt_details->date_label}}</b> {{$receipt_details->invoice_date}}
 			</h5>
 			@endif
@@ -352,6 +352,9 @@ function numberTowords($num)
 		</div>
 		
 		<div class="col-md-6 bg-primary text-light">
+			@if(!empty($receipt_details->customer_info))
+			<b style="margin-bottom:0px;">{!! $receipt_details->customer_info !!}</b> 
+			@endif
 		    <!-- Address -->
 			{{-- <p style="font-size: 16px;border-bottom: 1px solid #d6d6d6"> --}}
 				{{-- @if(!empty($receipt_details->address)) --}}
