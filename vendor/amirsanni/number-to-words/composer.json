@@ -1,0 +1,17 @@
+{
+    "name": "amirsanni/number-to-words",
+    "description": "A simple library for converting figures to words in PHP.",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Amir Sanni",
+            "email": "amirsanni@gmail.com"
+        }
+    ],
+    "require": {},
+	"autoload":{
+		"psr-4": {
+			"amirsanni\\numbertowords\\":"src/"
+		}
+	}
+}
