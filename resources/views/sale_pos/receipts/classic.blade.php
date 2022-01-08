@@ -36,6 +36,7 @@
 		
 		.page-alternate {
 			/* width: 720px; */
+			width: 100%;
 			/*height:100vh;*/
 		}
 
@@ -196,7 +197,7 @@ function numberTowords($num)
 		</div>
 	
 	<div class="d-flex justify-content-between mb-3">
-		<div class="bg-primary text-light">
+		<div class="bg-primary text-light mr-5">
 			<!-- Invoice  number, Date  -->
 			<p style="width: 100% !important; font-size: 14px;" class="word-wrap">
 				<span class="pull-left text-left word-wrap" style="margin-bottom:0px;">
