@@ -629,10 +629,10 @@ function numberTowords($num)
 						
 					
 						<div class="row">
-							<div class="col-xs-6">
+							<div class="col-xs-6" style="border:1px solid black;">
 							    <table class="table table-slim" border="1">
 							     <tr>
-								    <td  style="text-align:right;font-weight:bold;">{!! $receipt_details->subtotal_label !!}</td>
+								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;">{!! $receipt_details->subtotal_label !!}</td>
 								    <td  style="text-align:right; font-weight:bold;">{{ $total_taxable_amount }}</td>
 								</tr>
 								
@@ -698,10 +698,10 @@ function numberTowords($num)
 								<!--</table>-->
 							</div>
 
-							<div class="col-xs-6">
+							<div class="col-xs-6" style="border:1px solid black;">
 							    <table class="table table-slim" border="1">
 							        <tr>
-								    <td  style="text-align:right;font-weight:bold;"> المجموع الفرعي</td>
+								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;"> المجموع الفرعي</td>
 
 								    
 								    <td style="font-weight:bold;text-align:right;">
