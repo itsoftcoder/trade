@@ -1,0 +1,17 @@
+[2021-12-27 19:40:15] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-27 19:40:26] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-27 19:40:52] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-27 19:40:54] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-27 19:40:54] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-27 19:40:55] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-27 19:40:55] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-27 19:40:56] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-27 19:40:59] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-27 19:41:22] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-27 19:41:24] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-27 21:09:40] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/app/Utils/ContactUtil.phpLine:131Message:Error Processing Request  
+[2021-12-27 21:09:44] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/app/Utils/ContactUtil.phpLine:131Message:Error Processing Request  
+[2021-12-27 21:09:51] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/app/Utils/ContactUtil.phpLine:131Message:Error Processing Request  
+[2021-12-27 21:09:59] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/app/Utils/ContactUtil.phpLine:131Message:Error Processing Request  
+[2021-12-27 21:10:00] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/app/Utils/ContactUtil.phpLine:131Message:Error Processing Request  
+[2021-12-27 21:10:13] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/app/Utils/ContactUtil.phpLine:131Message:Error Processing Request  

@@ -1,0 +1,2 @@
+[2021-12-25 18:17:47] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
+[2021-12-25 22:39:08] local.EMERGENCY: File:/home/salesoft/public_html/latestpos/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.phpLine:454Message:No query results for model [App\Variation].  
