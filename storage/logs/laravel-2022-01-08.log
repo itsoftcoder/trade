@@ -1486,7 +1486,8 @@ Stack trace:
 [stacktrace]
 #0 {main}
 "} 
-[2022-01-08 17:47:57] local.ERROR: syntax error, unexpected 'Route' (T_STRING) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): syntax error, unexpected 'Route' (T_STRING) at D:\\xampp\\htdocs\\pos\outes\\web.php:18)
+[2022-01-08 17:47:57] local.ERROR: syntax error, unexpected 'Route' (T_STRING) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): syntax error, unexpected 'Route' (T_STRING) at D:\\xampp\\htdocs\\pos\
+outes\\web.php:18)
 [stacktrace]
 #0 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(415): Illuminate\\Routing\\RouteFileRegistrar->register('D:\\\\xampp\\\\htdocs...')
 #1 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('D:\\\\xampp\\\\htdocs...')
@@ -1517,7 +1518,8 @@ Stack trace:
 #26 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #27 {main}
 "} 
-[2022-01-08 17:48:07] local.ERROR: syntax error, unexpected 'Route' (T_STRING) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): syntax error, unexpected 'Route' (T_STRING) at D:\\xampp\\htdocs\\pos\outes\\web.php:22)
+[2022-01-08 17:48:07] local.ERROR: syntax error, unexpected 'Route' (T_STRING) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): syntax error, unexpected 'Route' (T_STRING) at D:\\xampp\\htdocs\\pos\
+outes\\web.php:22)
 [stacktrace]
 #0 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(415): Illuminate\\Routing\\RouteFileRegistrar->register('D:\\\\xampp\\\\htdocs...')
 #1 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('D:\\\\xampp\\\\htdocs...')
@@ -1548,7 +1550,8 @@ Stack trace:
 #26 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #27 {main}
 "} 
-[2022-01-08 17:48:07] local.ERROR: syntax error, unexpected 'Route' (T_STRING) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): syntax error, unexpected 'Route' (T_STRING) at D:\\xampp\\htdocs\\pos\outes\\web.php:22)
+[2022-01-08 17:48:07] local.ERROR: syntax error, unexpected 'Route' (T_STRING) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): syntax error, unexpected 'Route' (T_STRING) at D:\\xampp\\htdocs\\pos\
+outes\\web.php:22)
 [stacktrace]
 #0 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(415): Illuminate\\Routing\\RouteFileRegistrar->register('D:\\\\xampp\\\\htdocs...')
 #1 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('D:\\\\xampp\\\\htdocs...')
@@ -1579,7 +1582,8 @@ Stack trace:
 #26 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #27 {main}
 "} 
-[2022-01-08 17:48:07] local.ERROR: syntax error, unexpected 'Route' (T_STRING) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): syntax error, unexpected 'Route' (T_STRING) at D:\\xampp\\htdocs\\pos\outes\\web.php:22)
+[2022-01-08 17:48:07] local.ERROR: syntax error, unexpected 'Route' (T_STRING) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): syntax error, unexpected 'Route' (T_STRING) at D:\\xampp\\htdocs\\pos\
+outes\\web.php:22)
 [stacktrace]
 #0 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(415): Illuminate\\Routing\\RouteFileRegistrar->register('D:\\\\xampp\\\\htdocs...')
 #1 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('D:\\\\xampp\\\\htdocs...')
@@ -1628,7 +1632,8 @@ Stack trace:
 "} 
 [2022-01-08 17:48:15] local.ERROR: Method Illuminate\Routing\Route::get does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Routing\\Route::get does not exist. at D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Macroable.php:78)
 [stacktrace]
-#0 D:\\xampp\\htdocs\\pos\outes\\web.php(20): Illuminate\\Routing\\Route::__callStatic('get', Array)
+#0 D:\\xampp\\htdocs\\pos\
+outes\\web.php(20): Illuminate\\Routing\\Route::__callStatic('get', Array)
 #1 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteFileRegistrar.php(35): require('D:\\\\xampp\\\\htdocs...')
 #2 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(415): Illuminate\\Routing\\RouteFileRegistrar->register('D:\\\\xampp\\\\htdocs...')
 #3 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('D:\\\\xampp\\\\htdocs...')
@@ -1661,7 +1666,8 @@ Stack trace:
 "} 
 [2022-01-08 17:48:17] local.ERROR: Method Illuminate\Routing\Route::get does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Routing\\Route::get does not exist. at D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Macroable.php:78)
 [stacktrace]
-#0 D:\\xampp\\htdocs\\pos\outes\\web.php(20): Illuminate\\Routing\\Route::__callStatic('get', Array)
+#0 D:\\xampp\\htdocs\\pos\
+outes\\web.php(20): Illuminate\\Routing\\Route::__callStatic('get', Array)
 #1 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteFileRegistrar.php(35): require('D:\\\\xampp\\\\htdocs...')
 #2 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(415): Illuminate\\Routing\\RouteFileRegistrar->register('D:\\\\xampp\\\\htdocs...')
 #3 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('D:\\\\xampp\\\\htdocs...')
@@ -1696,7 +1702,8 @@ Stack trace:
 "} 
 [2022-01-08 17:48:28] local.ERROR: Method Illuminate\Routing\Route::get does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Routing\\Route::get does not exist. at D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Macroable.php:78)
 [stacktrace]
-#0 D:\\xampp\\htdocs\\pos\outes\\web.php(20): Illuminate\\Routing\\Route::__callStatic('get', Array)
+#0 D:\\xampp\\htdocs\\pos\
+outes\\web.php(20): Illuminate\\Routing\\Route::__callStatic('get', Array)
 #1 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteFileRegistrar.php(35): require('D:\\\\xampp\\\\htdocs...')
 #2 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(415): Illuminate\\Routing\\RouteFileRegistrar->register('D:\\\\xampp\\\\htdocs...')
 #3 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('D:\\\\xampp\\\\htdocs...')
@@ -1729,7 +1736,8 @@ Stack trace:
 "} 
 [2022-01-08 17:48:28] local.ERROR: Method Illuminate\Routing\Route::get does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Routing\\Route::get does not exist. at D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Traits\\Macroable.php:78)
 [stacktrace]
-#0 D:\\xampp\\htdocs\\pos\outes\\web.php(20): Illuminate\\Routing\\Route::__callStatic('get', Array)
+#0 D:\\xampp\\htdocs\\pos\
+outes\\web.php(20): Illuminate\\Routing\\Route::__callStatic('get', Array)
 #1 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteFileRegistrar.php(35): require('D:\\\\xampp\\\\htdocs...')
 #2 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(415): Illuminate\\Routing\\RouteFileRegistrar->register('D:\\\\xampp\\\\htdocs...')
 #3 D:\\xampp\\htdocs\\pos\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('D:\\\\xampp\\\\htdocs...')

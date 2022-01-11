@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4146f8c99a71b35ddb06361943e48c67",
+    "content-hash": "cba537f300cc6dc9ac3a4e13baf056b2",
     "packages": [
         {
             "name": "aloha/twilio",
@@ -69,6 +69,41 @@
                 "twilio"
             ],
             "time": "2020-07-17T22:52:45+00:00"
+        },
+        {
+            "name": "amirsanni/number-to-words",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/amirsanni/number-to-words.git",
+                "reference": "327d1f8fed3a24bf2015c379b95260901bd5c56a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/amirsanni/number-to-words/zipball/327d1f8fed3a24bf2015c379b95260901bd5c56a",
+                "reference": "327d1f8fed3a24bf2015c379b95260901bd5c56a",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "amirsanni\\numbertowords\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Amir Sanni",
+                    "email": "amirsanni@gmail.com"
+                }
+            ],
+            "description": "A simple library for converting figures to words in PHP.",
+            "support": {
+                "issues": "https://github.com/amirsanni/number-to-words/issues",
+                "source": "https://github.com/amirsanni/number-to-words/tree/master"
+            },
+            "time": "2019-04-11T12:56:02+00:00"
         },
         {
             "name": "anahkiasen/underscore-php",
@@ -9950,11 +9985,14 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "amirsanni/number-to-words": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1.3"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
 }
