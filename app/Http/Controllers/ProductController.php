@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
+
 class ProductController extends Controller
 {
     /**
@@ -102,6 +103,7 @@ class ProductController extends Controller
             $products = $query->select(
                 'products.id',
                 'products.name as product',
+                'products.arabic_name',
                 'products.type',
                 'c1.name as category',
                 'c2.name as sub_category',
@@ -177,6 +179,7 @@ class ProductController extends Controller
                 $products->where('products.repair_model_id', request()->get('repair_model_id'));
             }
 
+            // dump($products);
             return Datatables::of($products)
                 ->addColumn(
                     'product_locations',
@@ -255,7 +258,7 @@ class ProductController extends Controller
                         $product = $product .'<br><i class="fab fa-wordpress"></i>';
                     }
 
-                    return $product;
+                    return $product." - ".$row->arabic_name;
                 })
                 ->editColumn('image', function ($row) {
                     return '<div style="display: flex;"><img src="' . $row->image_url . '" alt="Product image" class="product-thumbnail-small"></div>';
@@ -313,6 +316,9 @@ class ProductController extends Controller
 
         //list product screen filter from module
         $pos_module_data = $this->moduleUtil->getModuleData('get_filters_for_list_product_screen');
+        
+
+    //   dd($pos_module_data);
 
         return view('product.index')
             ->with(compact(
@@ -397,9 +403,13 @@ class ProductController extends Controller
 
         //product screen view from module
         $pos_module_data = $this->moduleUtil->getModuleData('get_product_screen_top_view');
-
+        
+         
+        
+       $show_arabic_product_name = Business::where('id',$business_id)->first()->show_arabic_product_name;
+    //   dump($show_arabic_product_name);
         return view('product.create')
-            ->with(compact('categories', 'brands', 'units', 'taxes', 'barcode_types', 'default_profit_percent', 'tax_attributes', 'barcode_default', 'business_locations', 'duplicate_product', 'sub_categories', 'rack_details', 'selling_price_group_count', 'module_form_parts', 'product_types', 'common_settings', 'warranties', 'pos_module_data'));
+            ->with(compact('categories', 'brands', 'units', 'taxes', 'barcode_types', 'default_profit_percent', 'tax_attributes', 'barcode_default', 'business_locations', 'duplicate_product', 'sub_categories', 'rack_details', 'selling_price_group_count', 'module_form_parts', 'product_types', 'common_settings', 'warranties', 'pos_module_data','show_arabic_product_name'));
     }
 
     private function product_types()
@@ -446,6 +456,11 @@ class ProductController extends Controller
             if (empty($product_details['sku'])) {
                 $product_details['sku'] = ' ';
             }
+            
+            if (!empty($request->input('arabic_name'))) {
+                $product_details['arabic_name'] = $request->input('arabic_name');
+            }
+
 
             if (!empty($product_details['alert_quantity'])) {
                 $product_details['alert_quantity'] = $this->productUtil->num_uf($product_details['alert_quantity']);
@@ -571,7 +586,7 @@ class ProductController extends Controller
 
         $business_id = request()->session()->get('user.business_id');
         $details = $this->productUtil->getRackDetails($business_id, $id, true);
-
+        // dump($details);
         return view('product.show')->with(compact('details'));
     }
 
@@ -630,9 +645,10 @@ class ProductController extends Controller
 
         //product screen view from module
         $pos_module_data = $this->moduleUtil->getModuleData('get_product_screen_top_view');
-
+        $show_arabic_product_name = Business::where('id',$business_id)->first()->show_arabic_product_name;
+// dump($product);
         return view('product.edit')
-                ->with(compact('categories', 'brands', 'units', 'sub_units', 'taxes', 'tax_attributes', 'barcode_types', 'product', 'sub_categories', 'default_profit_percent', 'business_locations', 'rack_details', 'selling_price_group_count', 'module_form_parts', 'product_types', 'common_settings', 'warranties', 'pos_module_data'));
+                ->with(compact('categories', 'brands', 'units', 'sub_units', 'taxes', 'tax_attributes', 'barcode_types', 'product', 'sub_categories', 'default_profit_percent', 'business_locations', 'rack_details', 'selling_price_group_count', 'module_form_parts', 'product_types', 'common_settings', 'warranties', 'pos_module_data','show_arabic_product_name'));
     }
 
     /**
@@ -644,6 +660,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $request->all();
         if (!auth()->user()->can('product.update')) {
             abort(403, 'Unauthorized action.');
         }
@@ -683,6 +700,10 @@ class ProductController extends Controller
             $product->product_description = $product_details['product_description'];
             $product->sub_unit_ids = !empty($product_details['sub_unit_ids']) ? $product_details['sub_unit_ids'] : null;
             $product->warranty_id = !empty($request->input('warranty_id')) ? $request->input('warranty_id') : null;
+            
+             if (!empty($request->input('arabic_name'))) {
+                $product->arabic_name = $request->input('arabic_name');
+            }
 
             if (!empty($request->input('enable_stock')) &&  $request->input('enable_stock') == 1) {
                 $product->enable_stock = 1;
@@ -1468,6 +1489,7 @@ class ProductController extends Controller
                 $combo_variations = $this->productUtil->__getComboProductDetails($product['variations'][0]->combo_variations, $business_id);
             }
 
+        //   dump($product);
             return view('product.view-modal')->with(compact(
                 'product',
                 'rack_details',

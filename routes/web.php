@@ -1,5 +1,6 @@
 <?php
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/testing',function(){
-    return view('testing');
-});
+Route::get('/testing',function(Request $request){
+    
+     $english_char = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9');
+     $arabic_char = array('أ','ب','ك','د','ي','ف','غ','ه','ي','ج','ك','ل','م','ن','و','ب','ق','ر','س','ت','و','ف','و','كس','ي','ز','٠','١','٢','٣','٤','٥','٦','٧','٨','٩');
+     $name = $request->get('name');
+     $arabic_name = str_replace($english_char, $arabic_char, $name);
+     return $arabic_name;
+
+})->name('testing');
 
 Route::middleware(['setData'])->group(function () {
     /*Route::get('/', function () {

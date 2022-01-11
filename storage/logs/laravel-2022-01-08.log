@@ -1778,3 +1778,5 @@ Stack trace:
 [stacktrace]
 #0 {main}
 "} 
+[2022-01-08 15:10:55] local.EMERGENCY: ERROR: NOT ALLOWED: Mismatch between sold and purchase quantity. Product: Normal Glass SKU: 0008 Quantity: 2 Business: Mojtaba Ali Bin Salman Al Faraj Aluminum Workshop Location: Mojtaba Ali Bin Salman Al Faraj Aluminum Workshop  
+[2022-01-08 15:10:55] local.EMERGENCY: File:/home/working/pos.working.trade/app/Utils/TransactionUtil.phpLine:3137Message:ERROR: NOT ALLOWED: Mismatch between sold and purchase quantity. Product: Normal Glass SKU: 0008 Quantity: 2  

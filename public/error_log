@@ -1,0 +1,3 @@
+[10-Jan-2022 18:30:51 Asia/Riyadh] PHP Warning:  Unterminated comment starting line 210 in /home/working/pos.working.trade/vendor/laravel/framework/src/Illuminate/View/Compilers/BladeCompiler.php on line 153
+[10-Jan-2022 18:33:51 Asia/Riyadh] PHP Warning:  Unterminated comment starting line 210 in /home/working/pos.working.trade/vendor/laravel/framework/src/Illuminate/View/Compilers/BladeCompiler.php on line 153
+[10-Jan-2022 23:12:43 Asia/Dhaka] PHP Fatal error:  Cannot use Illuminate\Support\Facades\DB as DB because the name is already in use in /home/working/pos.working.trade/app/Http/Controllers/ProductController.php on line 27

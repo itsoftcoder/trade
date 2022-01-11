@@ -18,22 +18,31 @@
     'id' => 'product_add_form','class' => 'product_form ' . $form_class, 'files' => true ]) !!}
     @component('components.widget', ['class' => 'box-primary'])
         <div class="row">
-        <div class="col-sm-4">
+        <div class=" @if($show_arabic_product_name) col-sm-3 @else col-sm-4 @endif">
           <div class="form-group">
             {!! Form::label('name', __('product.product_name') . ':*') !!}
               {!! Form::text('name', !empty($duplicate_product->name) ? $duplicate_product->name : null, ['class' => 'form-control', 'required',
-              'placeholder' => __('product.product_name')]); !!}
+              'placeholder' => __('product.product_name'), 'id' => 'product-name']); !!}
           </div>
         </div>
 
-        <div class="col-sm-4">
+        @if($show_arabic_product_name)
+        <div class="col-sm-3">
+          <div class="form-group">
+             <label class="form-label">Product Arabic Name</label>
+             <input type="text" name="arabic_name" class="form-control" id="product-arabic-name" />
+           </div>
+        </div>
+        @endif
+
+        <div class=" @if($show_arabic_product_name) col-sm-3 @else col-sm-4 @endif">
           <div class="form-group">
             {!! Form::label('sku', __('product.sku') . ':') !!} @show_tooltip(__('tooltip.sku'))
             {!! Form::text('sku', null, ['class' => 'form-control',
               'placeholder' => __('product.sku')]); !!}
           </div>
         </div>
-        <div class="col-sm-4">
+        <div class=" @if($show_arabic_product_name) col-sm-3 @else col-sm-4 @endif">
           <div class="form-group">
             {!! Form::label('barcode_type', __('product.barcode_type') . ':*') !!}
               {!! Form::select('barcode_type', $barcode_types, !empty($duplicate_product->barcode_type) ? $duplicate_product->barcode_type : $barcode_default, ['class' => 'form-control select2', 'required']); !!}
@@ -349,6 +358,17 @@
     </div>
   </div>
 {!! Form::close() !!}
+
+<?php 
+
+
+        $english_char = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','0','1','2','3','4','5','6','7','8','9');
+        $arabic_char = array('أ','ب','ك','د','ي','ف','غ','ه','ي','ج','ك','ل','م','ن','و','ب','ق','ر','س','ت','و','ف','و','كس','ي','ز','٠','١','٢','٣','٤','٥','٦','٧','٨','٩');
+        // $western_arabic = array('0','1','2','3','4','5','6','7','8','9');
+        // $eastern_arabic = array('٠','١','٢','٣','٤','٥','٦','٧','٨','٩');
+    //   echo str_replace($english_char, $arabic_char, $sent);
+
+?>
   
 </section>
 <!-- /.content -->
@@ -376,6 +396,25 @@
                 // onKeyDetect: function(iKeyCode){ // output all potentially relevant key events - great for debugging!
                 //     console.log('Pressed: ' + iKeyCode);
                 // }
+            });
+            
+            $('#product-name').blur(function(){
+                 let name = $(this).val().toLowerCase();
+                 
+         
+                
+               $.ajax({
+                   url : @json(route('testing')),
+                   data: {name:name},
+                   method: 'GET',
+                   success: function(response){
+                    //   console.log(response)
+                        $('#product-arabic-name').val(response);
+                   }
+               })
+              
+    
+                
             });
         });
     </script>

@@ -409,7 +409,7 @@ class BusinessController extends Controller
             }
 
             $checkboxes = ['enable_editing_product_from_purchase',
-                'enable_inline_tax',
+                'enable_inline_tax','show_arabic_product_name',
                 'enable_brand', 'enable_category', 'enable_sub_category', 'enable_price_tax', 'enable_purchase_status',
                 'enable_lot_number', 'enable_racks', 'enable_row', 'enable_position', 'enable_sub_units'];
             foreach ($checkboxes as $value) {

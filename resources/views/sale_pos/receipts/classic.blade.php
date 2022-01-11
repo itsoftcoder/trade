@@ -12,7 +12,7 @@
 
 		.page-footer,
 		.page-footer-space {
-			height: 240px;
+			height: 230px;
 
 		}
 
@@ -35,7 +35,8 @@
 		}
 		
 		.page-alternate {
-			width: 720px;
+			/* width: 720px; */
+			width: 100%;
 			/*height:100vh;*/
 		}
 
@@ -79,96 +80,12 @@
 
 <body>
     
-<?php 
-function numberTowords($num)
-{
 
-    $ones = array(
-        0 =>"ZERO",
-        1 => "ONE",
-        2 => "TWO",
-        3 => "THREE",
-        4 => "FOUR",
-        5 => "FIVE",
-        6 => "SIX",
-        7 => "SEVEN",
-        8 => "EIGHT",
-        9 => "NINE",
-        10 => "TEN",
-        11 => "ELEVEN",
-        12 => "TWELVE",
-        13 => "THIRTEEN",
-        14 => "FOURTEEN",
-        15 => "FIFTEEN",
-        16 => "SIXTEEN",
-        17 => "SEVENTEEN",
-        18 => "EIGHTEEN",
-        19 => "NINETEEN"
-    );
 
-    $tens = array( 
-        0 => "ZERO",
-        1 => "TEN",
-        2 => "TWENTY",
-        3 => "THIRTY", 
-        4 => "FORTY", 
-        5 => "FIFTY", 
-        6 => "SIXTY", 
-        7 => "SEVENTY", 
-        8 => "EIGHTY", 
-        9 => "NINETY" 
-    ); 
-
-    $hundreds = array( 
-        "HUNDRED", 
-        "THOUSAND", 
-        "MILLION", 
-        "BILLION", 
-        "TRILLION", 
-        "QUARDRILLION" 
-    ); /*limit t quadrillion */
-
-    $num = number_format($num,2,".",","); 
-    $num_arr = explode(".",$num); 
-    $wholenum = $num_arr[0]; 
-    $decnum = $num_arr[1]; 
-
-    $whole_arr = array_reverse(explode(",",$wholenum)); 
-    krsort($whole_arr,1); 
-
-    $rettxt = ""; 
-    foreach($whole_arr as $key => $i){
-      
-        while(substr($i,0,1)=="0")
-            $i=substr($i,1,5);
-        if($i < 20){ 
-            /* echo "getting:".$i; */
-            $rettxt .= $ones[$i]; 
-        }elseif($i < 100){ 
-            if(substr($i,0,1)!="0")  $rettxt .= $tens[substr($i,0,1)]; 
-            if(substr($i,1,1)!="0") $rettxt .= " ".$ones[substr($i,1,1)]; 
-        } else{ 
-             if(substr($i,0,1)!="0") $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0]; 
-            if(substr($i,1,1)!="0")$rettxt .= " ".$tens[substr($i,1,1)]; 
-            if(substr($i,2,1)!="0")$rettxt .= " ".$ones[substr($i,2,1)]; 
-        } 
-        if($key > 0){ 
-            $rettxt .= " ".$hundreds[$key]." "; 
-        }
-    } 
-    if($decnum > 0){
-        $rettxt .= " AND ";
-        if($decnum < 20) {
-            $rettxt .= $ones[$decnum]." FILS";
-        } elseif($decnum < 100) {
-            $rettxt .= $tens[substr($decnum,0,1)];
-            $rettxt .= " ".$ones[substr($decnum,1,1)]. " FILS";
-        }
-    }
-    return $rettxt;
-}
-
-?>
+    @include('includes.number-to-word')
+    <?php 
+    $number_to_word = new NumberToWords();    
+    ?>
 
 	<div class="page-header" style="text-align: center">
 		@if(!empty($receipt_details->logo))
@@ -184,24 +101,28 @@ function numberTowords($num)
 		<div class="col-12">
 		    <!-- Title of receipt -->
 			@if(!empty($receipt_details->invoice_heading))
-			<h3 class="text-center" style="margin-top: 0;margin-bottom:5px;">
+			<h3 class="text-center" style="margin-top: 0; margin-bottom:5px;">
 				{!! $receipt_details->invoice_heading !!}
 				<br>
 				فاتورة
 			</h3>
+			<h5 style="margin-bottom: 0; margin-top:2px;">
+				<b>{{$receipt_details->date_label}}</b> {{$receipt_details->invoice_date}}
+			</h5>
 			@endif
 		</div>
-		
-		<div class="col-md-6 bg-primary text-light">
-		    <!-- Invoice  number, Date  -->
-			<p style="width: 100% !important; font-size: 14px; background:blue; color:white;" class="word-wrap" style="">
-				<span class="pull-left text-left word-wrap" style="margin-bottom:0px;">
+	
+
+		<div class="col-xs-6">
+			<!-- Invoice  number, Date  -->
+			<div style="width: 100% !important; font-size: 14px;" class="word-wrap text-left">
+				<span class="" style="margin-bottom:0px;">
 					@if(!empty($receipt_details->invoice_no_prefix))
 					<b>{!! $receipt_details->invoice_no_prefix !!}</b>
 					@endif
 					{{$receipt_details->invoice_no}}
 
-					@if(!empty($receipt_details->types_of_service))
+					{{-- @if(!empty($receipt_details->types_of_service))
 					<br />
 					<span class="pull-left text-left">
 						<strong>{!! $receipt_details->types_of_service_label !!}:</strong>
@@ -213,10 +134,10 @@ function numberTowords($num)
 						@endforeach
 						@endif
 					</span>
-					@endif
+					@endif --}}
 
 					<!-- Table information-->
-					@if(!empty($receipt_details->table_label) || !empty($receipt_details->table))
+					{{-- @if(!empty($receipt_details->table_label) || !empty($receipt_details->table))
 					<br />
 					<span class="pull-left text-left" style="font-size: 14px;">
 						@if(!empty($receipt_details->table_label))
@@ -226,11 +147,11 @@ function numberTowords($num)
 
 						<!-- Waiter info -->
 					</span>
-					@endif
+					@endif --}}
 
 					<!-- customer info -->
 					@if(!empty($receipt_details->customer_info))
-					<b style="margin-bottom:0px;">{!! $receipt_details->customer_info !!}</b> 
+					<b style="margin-bottom:0px; margin-right:10px;">{!! $receipt_details->customer_info !!}</b> 
 					@endif
 					@if(!empty($receipt_details->client_id_label))
 					<br />
@@ -240,7 +161,7 @@ function numberTowords($num)
 					<br />
 					<b style="margin-top:0px !important!;">{{ $receipt_details->customer_tax_label }}</b> {{ $receipt_details->customer_tax_number }}
 					@endif
-					@if(!empty($receipt_details->customer_custom_fields))
+					{{-- @if(!empty($receipt_details->customer_custom_fields))
 					<br />{!! $receipt_details->customer_custom_fields !!}
 					@endif
 					@if(!empty($receipt_details->sales_person_label))
@@ -250,13 +171,13 @@ function numberTowords($num)
 					@if(!empty($receipt_details->customer_rp_label))
 					<br />
 					<strong>{{ $receipt_details->customer_rp_label }}</strong> {{ $receipt_details->customer_total_rp }}
-					@endif
+					@endif --}}
 				</span>
 
-				<span class="pull-right text-left" style="font-size: 14px;">
-					<b>{{$receipt_details->date_label}}</b> {{$receipt_details->invoice_date}}
+				{{-- <span class="pull-right text-left" style="font-size: 14px;"> --}}
+					{{-- <b>{{$receipt_details->date_label}}</b> {{$receipt_details->invoice_date}} --}}
 
-					@if(!empty($receipt_details->due_date_label))
+					{{-- @if(!empty($receipt_details->due_date_label))
 					<br><b>{{$receipt_details->due_date_label}}</b> {{$receipt_details->due_date ?? ''}}
 					@endif
 
@@ -266,49 +187,49 @@ function numberTowords($num)
 					<b>{!! $receipt_details->brand_label !!}</b>
 					@endif
 					{{$receipt_details->repair_brand}}
-					@endif
+					@endif --}}
 
 
-					@if(!empty($receipt_details->device_label) || !empty($receipt_details->repair_device))
+					{{-- @if(!empty($receipt_details->device_label) || !empty($receipt_details->repair_device))
 					<br>
 					@if(!empty($receipt_details->device_label))
 					<b>{!! $receipt_details->device_label !!}</b>
 					@endif
 					{{$receipt_details->repair_device}}
-					@endif
+					@endif --}}
 
-					@if(!empty($receipt_details->model_no_label) || !empty($receipt_details->repair_model_no))
+					{{-- @if(!empty($receipt_details->model_no_label) || !empty($receipt_details->repair_model_no))
 					<br>
 					@if(!empty($receipt_details->model_no_label))
 					<b>{!! $receipt_details->model_no_label !!}</b>
 					@endif
 					{{$receipt_details->repair_model_no}}
-					@endif
+					@endif --}}
 
-					@if(!empty($receipt_details->serial_no_label) || !empty($receipt_details->repair_serial_no))
+					{{-- @if(!empty($receipt_details->serial_no_label) || !empty($receipt_details->repair_serial_no))
 					<br>
 					@if(!empty($receipt_details->serial_no_label))
 					<b>{!! $receipt_details->serial_no_label !!}</b>
 					@endif
 					{{$receipt_details->repair_serial_no}}<br>
-					@endif
-					@if(!empty($receipt_details->repair_status_label) || !empty($receipt_details->repair_status))
+					@endif --}}
+					{{-- @if(!empty($receipt_details->repair_status_label) || !empty($receipt_details->repair_status))
 					@if(!empty($receipt_details->repair_status_label))
 					<b>{!! $receipt_details->repair_status_label !!}</b>
 					@endif
 					{{$receipt_details->repair_status}}<br>
-					@endif
+					@endif --}}
 
-					@if(!empty($receipt_details->repair_warranty_label) || !empty($receipt_details->repair_warranty))
+					{{-- @if(!empty($receipt_details->repair_warranty_label) || !empty($receipt_details->repair_warranty))
 					@if(!empty($receipt_details->repair_warranty_label))
 					<b>{!! $receipt_details->repair_warranty_label !!}</b>
 					@endif
 					{{$receipt_details->repair_warranty}}
 					<br>
-					@endif
+					@endif --}}
 
 					<!-- Waiter info -->
-					@if(!empty($receipt_details->service_staff_label) || !empty($receipt_details->service_staff))
+					{{-- @if(!empty($receipt_details->service_staff_label) || !empty($receipt_details->service_staff))
 					<br />
 					@if(!empty($receipt_details->service_staff_label))
 					<b>{!! $receipt_details->service_staff_label !!}</b>
@@ -317,9 +238,9 @@ function numberTowords($num)
 					@endif
 					@if(!empty($receipt_details->shipping_custom_field_1_label))
 					<br><strong>{!!$receipt_details->shipping_custom_field_1_label!!} :</strong> {!!$receipt_details->shipping_custom_field_1_value ?? ''!!}
-					@endif
+					@endif --}}
 
-					@if(!empty($receipt_details->shipping_custom_field_2_label))
+					{{-- @if(!empty($receipt_details->shipping_custom_field_2_label))
 					<br><strong>{!!$receipt_details->shipping_custom_field_2_label!!}:</strong> {!!$receipt_details->shipping_custom_field_2_value ?? ''!!}
 					@endif
 
@@ -333,9 +254,9 @@ function numberTowords($num)
 
 					@if(!empty($receipt_details->shipping_custom_field_5_label))
 					<br><strong>{!!$receipt_details->shipping_custom_field_2_label!!}:</strong> {!!$receipt_details->shipping_custom_field_5_value ?? ''!!}
-					@endif
+					@endif --}}
 					{{-- sale order --}}
-					@if(!empty($receipt_details->sale_orders_invoice_no))
+					{{-- @if(!empty($receipt_details->sale_orders_invoice_no))
 					<br>
 					<strong>@lang('restaurant.order_no'):</strong> {!!$receipt_details->sale_orders_invoice_no ?? ''!!}
 					@endif
@@ -343,20 +264,94 @@ function numberTowords($num)
 					@if(!empty($receipt_details->sale_orders_invoice_date))
 					<br>
 					<strong>@lang('lang_v1.order_dates'):</strong> {!!$receipt_details->sale_orders_invoice_date ?? ''!!}
-					@endif
-				</span>
-			</p>
+					@endif --}}
+				{{-- </span> --}}
+			</div>
 		</div>
 		
-		<div class="col-md-6 bg-primary text-light">
-		    <!-- Address -->
-			<p style="font-size: 16px;border-bottom: 1px solid #d6d6d6">
-				@if(!empty($receipt_details->address))
+		<div class="col-xs-6">
+			<div style="width: 100% !important; font-size: 14px;" class="word-wrap text-right">
+				<span class="" style="margin-bottom:0px;">
+					@if(!empty($receipt_details->invoice_no_prefix))
+					<b>رقم الفاتورة</b>
+					@endif
+					{{$receipt_details->invoice_no}}
+
+					{{-- @if(!empty($receipt_details->types_of_service))
+					<br />
+					<span class="pull-left text-left">
+						<strong>{!! $receipt_details->types_of_service_label !!}:</strong>
+						{{$receipt_details->types_of_service}}
+						<!-- Waiter info -->
+						@if(!empty($receipt_details->types_of_service_custom_fields))
+						@foreach($receipt_details->types_of_service_custom_fields as $key => $value)
+						<br><strong>{{$key}}: </strong> {{$value}}
+						@endforeach
+						@endif
+					</span>
+					@endif --}}
+
+					<!-- Table information-->
+					{{-- @if(!empty($receipt_details->table_label) || !empty($receipt_details->table))
+					<br />
+					<span class="pull-left text-left" style="font-size: 14px;">
+						@if(!empty($receipt_details->table_label))
+						<b>{!! $receipt_details->table_label !!}</b>
+						@endif
+						{{$receipt_details->table}}
+
+						<!-- Waiter info -->
+					</span>
+					@endif --}}
+
+					<!-- customer info -->
+					@if(!empty($receipt_details->customer_info))
+					{{-- <b style="margin-bottom:0px; ">{!! $receipt_details->customer_info !!}</b>  --}}
+					<b>عميل بدون حجز</b><br>
+					<b>التليفون المحمول : </b><br>
+					@if(!empty($receipt_details->customer_tax_label))
+					<b>ضريبة<b> : {{ $receipt_details->customer_tax_number }}
+					@endif
+					
+					@endif
+					{{-- @if(!empty($receipt_details->client_id_label))
+					<br />
+					<b>{{ $receipt_details->client_id_label }}</b> {{ $receipt_details->client_id }}
+					@endif --}}
+					{{-- @if(!empty($receipt_details->customer_tax_label))
+					<br />
+					<b style="margin-top:0px !important!;">{{ $receipt_details->customer_tax_label }}</b> {{ $receipt_details->customer_tax_number }}
+					@endif --}}
+					{{-- @if(!empty($receipt_details->customer_custom_fields))
+					<br />{!! $receipt_details->customer_custom_fields !!}
+					@endif
+					@if(!empty($receipt_details->sales_person_label))
+					<br />
+					<b>{{ $receipt_details->sales_person_label }}</b> {{ $receipt_details->sales_person }}
+					@endif
+					@if(!empty($receipt_details->customer_rp_label))
+					<br />
+					<strong>{{ $receipt_details->customer_rp_label }}</strong> {{ $receipt_details->customer_total_rp }}
+					@endif --}}
+				</span>
+
+				{{-- <span class="pull-right text-left" style="font-size: 14px;"> --}}
+					{{-- <b>{{$receipt_details->date_label}}</b> {{$receipt_details->invoice_date}} --}}
+
+
+
+
+				
+				{{-- </span> --}}
+			</div>
+			<!-- Address -->
+			{{-- <p style="font-size: 16px;border-bottom: 1px solid #d6d6d6"> --}}
+				{{-- @if(!empty($receipt_details->address)) --}}
 				{{-- <small class="text-center">--}}
-				{!! $receipt_details->address !!}
+				{{-- {!! $receipt_details->address !!} --}}
 				{{-- </small>--}}
-				@endif
-				@if(!empty($receipt_details->contact))
+				{{-- @endif --}}
+				{{-- @if(!empty($receipt_details->contact))
 				<br />{!! $receipt_details->contact !!}
 				@endif
 				@if(!empty($receipt_details->contact) && !empty($receipt_details->website))
@@ -394,16 +389,17 @@ function numberTowords($num)
 				@if(!empty($receipt_details->tax_info2))
 				<b>{{ $receipt_details->tax_label2 }}</b> {{ $receipt_details->tax_info2 }}
 				@endif
-			</p>
+			</p> --}}
 		</div>
 
-
-		
 		
 	</div>
 
+	
+
+
 	<div class="page-footer">
-		<div class="row" style="margin-top: 35px;margin-bottom: 0">
+		<div class="row" style="margin-top: 15px;margin-bottom: 0">
 			<div class="col-md-12">
 				<div style="width: 50%;float: left">
 					<span style="border-top: 1px solid black">Receiver Signature</span>
@@ -551,7 +547,7 @@ function numberTowords($num)
 									<!--<td class="text-right" style="padding-right: 5px">{{$line['line_total']}}</td>-->
 									<td class="text-right" style="padding-right: 5px">
 									    {{$line['line_total']}}
-									    <?php $total_taxable_amount += $line['line_total']; ?>
+									    <?php $total_taxable_amount += $line['line_total_uf']; ?>
 									    </td>
 									<td>
 									    {{ $receipt_details->tax_amount }}
@@ -559,13 +555,13 @@ function numberTowords($num)
 									</td>
 									<td>
 									    <?php 
-									    $tax_amount = $line['line_total']*$receipt_details->tax_amount/100;
+									    $tax_amount = $line['line_total_uf']*$receipt_details->tax_amount/100;
 									    ?>
 									    {{ $tax_amount }}
 									    <?php $total_tax_amount += $tax_amount  ?>
 									</td>
 									<td>
-									    <?php $subtotal = $tax_amount+$line['line_total']; ?>
+									    <?php $subtotal = $tax_amount+$line['line_total_uf']; ?>
 									    {{ $subtotal }}
 									    <?php $total_amount += $subtotal; ?>
 									</td>
@@ -595,8 +591,26 @@ function numberTowords($num)
 							
 								
 								@endforelse
-								<?php $j = 11; ?>
-								@for($k=$i; $k <= $j; $k++)
+								<?php
+								   if($i == 1){
+								      $j = 11;
+								   }elseif($i == 2){
+								       $j = 10;
+								   }elseif($i == 3){
+								       $j = 9;
+								   }elseif($i == 4){
+								       $j = 8;
+								   }elseif($i == 5){
+								       $j = 7;
+								   }elseif($i == 6){
+								       $j = 6;
+								   }else{
+								       $j = 0;
+								   }
+								   
+								?>
+								
+								@for($k=1; $k <= $j; $k++)
 								<tr>
 								    <td style="border-right:1px solid black !important; border-bottom:0 !important; border-top:0 !important;border-left:0 !important;"></td>
 								    <td style="border-right:1px solid black !important; border-bottom:0 !important; border-top:0 !important;border-left:0 !important;"></td>
@@ -608,6 +622,7 @@ function numberTowords($num)
 								    <td style="border-left:1px solid black !important; border-bottom:0 !important; border-top:0 !important;border-right:0 !important;"></td>
 								</tr>
 								@endfor
+								
 					
 								
 								<?php 
@@ -617,34 +632,35 @@ function numberTowords($num)
                                 
 								?>
 								
-								
+						
 								<tr>
-								    <td colspan="8" rowspan="2">
-								        <strong>Amount IN Words : </strong><span>{{ numberTowords((double)$total_amount) }}</span>
+								    <td colspan="8">
+								        <b>Amount In Word:</b> <span>{{ $number_to_word->convert($total_amount, "SAR") }}</span>
 								    </td>
 								</tr>
+							
 							</tbody>
 						</table>
 						
-						
+					
 					
 						<div class="row">
 							<div class="col-xs-6">
 							    <table class="table table-slim" border="1">
 							     <tr>
-								    <td  style="text-align:right;font-weight:bold;">{!! $receipt_details->subtotal_label !!}</td>
-								    <td  style="text-align:right; font-weight:bold;">{{ $total_taxable_amount }}</td>
+								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;">{!! $receipt_details->subtotal_label !!}</td>
+								    <td  style="text-align:right; font-weight:bold; border-top:1px solid black;">{{ $total_taxable_amount }}</td>
 								</tr>
 								
 								<tr>
-								    <td  style="text-align:right;font-weight:bold;">Tax ({{ $receipt_details->tax_amount }} Percent Vat):</td>
-								    <td  style="text-align:right; font-weight:bold;">{{ $total_tax_amount }}</td>
+								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;">Tax ({{ $receipt_details->tax_amount }} Percent Vat):</td>
+								    <td  style="text-align:right; font-weight:bold; border-top:1px solid black;">{{ $total_tax_amount }}</td>
 								
 								</tr>
 								
 									<tr>
-								    <td  style="text-align:right;font-weight:bold;">{!! $receipt_details->total_label !!} </td>
-								    <td  style="text-align:right; font-weight:bold;">{{ $total_amount }} </td>
+								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;">{!! $receipt_details->total_label !!} </td>
+								    <td  style="text-align:right; font-weight:bold; border-top:1px solid black;">{{ $total_amount }} </td>
 								    
 								</tr>
 								
@@ -701,28 +717,28 @@ function numberTowords($num)
 							<div class="col-xs-6">
 							    <table class="table table-slim" border="1">
 							        <tr>
-								    <td  style="text-align:right;font-weight:bold;"> المجموع الفرعي</td>
+								    <td  style="text-align:right;font-weight:bold; border-top:1px solid black;"> المجموع الفرعي</td>
 
 								    
-								    <td style="font-weight:bold;text-align:right;">
+								    <td style="font-weight:bold;text-align:right; border-top:1px solid black;">
 								        {{ str_replace($western_arabic, $eastern_arabic, $total_taxable_amount) }}
 								    </td>
 								</tr>
 								
 								<tr>
-								    <td style="text-align:right;font-weight:bold;">الضريبة (15 بال{{ $receipt_details->tax_amount  }}ئة ضريبة القيمة المضافة):</td>
+								    <td style="text-align:right;font-weight:bold; border-top:1px solid black;">الضريبة (15 بال{{ $receipt_details->tax_amount  }}ئة ضريبة القيمة المضافة):</td>
 								  
 								    
-								    <td  style="font-weight:bold;text-align:right;">
+								    <td  style="font-weight:bold;text-align:right; border-top:1px solid black;">
 								        {{ str_replace($western_arabic, $eastern_arabic, $total_tax_amount) }}
 								    </td>
 								</tr>
 								
 								<tr>
-								    <td style="text-align:right;font-weight:bold;"> مجموع</td>
+								    <td style="text-align:right;font-weight:bold; border-top:1px solid black;"> مجموع</td>
 							
 								    
-								    <td style="font-weight:bold;text-align:right;">
+								    <td style="font-weight:bold;text-align:right; border-top:1px solid black;">
 								        {{ str_replace($western_arabic, $eastern_arabic, $total_amount) }}
 								    </td>
 								</tr>

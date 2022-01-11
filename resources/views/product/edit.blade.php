@@ -20,15 +20,24 @@
 
     @component('components.widget', ['class' => 'box-primary'])
         <div class="row">
-            <div class="col-sm-4">
+            <div class="@if($show_arabic_product_name) col-sm-3 @else col-sm-4 @endif">
               <div class="form-group">
                 {!! Form::label('name', __('product.product_name') . ':*') !!}
                   {!! Form::text('name', $product->name, ['class' => 'form-control', 'required',
-                  'placeholder' => __('product.product_name')]); !!}
+                  'placeholder' => __('product.product_name'), 'id' => 'product-name']); !!}
               </div>
             </div>
+            
+            @if($show_arabic_product_name)
+            <div class="col-sm-3">
+              <div class="form-group">
+                 <label class="form-label">Product Arabic Name</label>
+                 <input type="text" name="arabic_name" class="form-control" value="{{ $product->arabic_name }}" id="product-arabic-name" />
+               </div>
+            </div>
+            @endif
 
-            <div class="col-sm-4 @if(!(session('business.enable_category') && session('business.enable_sub_category'))) hide @endif">
+            <div class="@if($show_arabic_product_name) col-sm-3 @else col-sm-4 @endif @if(!(session('business.enable_category') && session('business.enable_sub_category'))) hide @endif">
               <div class="form-group">
                 {!! Form::label('sku', __('product.sku')  . ':*') !!} @show_tooltip(__('tooltip.sku'))
                 {!! Form::text('sku', $product->sku, ['class' => 'form-control',
@@ -36,7 +45,7 @@
               </div>
             </div>
 
-            <div class="col-sm-4">
+            <div class="@if($show_arabic_product_name) col-sm-3 @else col-sm-4 @endif">
               <div class="form-group">
                 {!! Form::label('barcode_type', __('product.barcode_type') . ':*') !!}
                   {!! Form::select('barcode_type', $barcode_types, $product->barcode_type, ['placeholder' => __('messages.please_select'), 'class' => 'form-control select2', 'required']); !!}
@@ -376,6 +385,25 @@
   <script type="text/javascript">
     $(document).ready( function(){
       __page_leave_confirmation('#product_add_form');
+      
+      $('#product-name').blur(function(){
+                 let name = $(this).val().toLowerCase();
+                 
+         
+                
+               $.ajax({
+                   url : @json(route('testing')),
+                   data: {name:name},
+                   method: 'GET',
+                   success: function(response){
+                    //   console.log(response)
+                        $('#product-arabic-name').val(response);
+                   }
+               })
+              
+    
+                
+            });
     });
   </script>
 @endsection

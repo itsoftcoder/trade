@@ -14,6 +14,7 @@
 "sku" => "SKU",
 "alert_quantity" => "Alarmmenge",
 "product_name" => "Produktname",
+'product_arabic_name' => 'Product Arabic Name',
 "auto_generate" => "Automatisch generieren",
 "manage_stock" => "Lagerbestand verwalten?",
 "enable_stock_help" => "Lagerverwaltung auf Produktebene aktivieren",

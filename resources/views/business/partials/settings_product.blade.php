@@ -50,7 +50,19 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="checkbox">
+                  <label>
+                    {!! Form::checkbox('show_arabic_product_name', 1, $business->show_arabic_product_name, 
+                    [ 'class' => 'input-icheck']); !!} Show Arabic Product Name
+                    
+                  </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
             <div class="form-group">
                 <div class="checkbox">
                   <label>
@@ -61,7 +73,7 @@
             </div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-md-3">
             <div class="form-group">
                 <div class="checkbox">
                   <label>
@@ -71,7 +83,7 @@
             </div>
         </div>
 
-        <div class="col-sm-4 enable_sub_category @if($business->enable_category != 1) hide @endif">
+        <div class="col-md-3 enable_sub_category @if($business->enable_category != 1) hide @endif">
             <div class="form-group">
                 <div class="checkbox">
                   <label>
