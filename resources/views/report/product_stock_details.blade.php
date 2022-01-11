@@ -119,7 +119,7 @@
 
                                 <tr>
                                     <td>
-                                        {{$row->product}} 
+                                        {{$row->product}}
                                         @if($row->type == "variable")     
                                             {{$row->product_variation}} - {{$row->variation_name}} ({{$row->sub_sku}}) 
                                         @else 

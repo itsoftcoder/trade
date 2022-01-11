@@ -208,7 +208,7 @@ $(document).ready(function() {
                     is_overselling_allowed = true;
                 }
             if (item.enable_stock == 1 && item.qty_available <= 0 && !is_overselling_allowed) {
-                var string = '<li class="ui-state-disabled">' + item.name;
+                var string = '<li class="ui-state-disabled">' + item.name + item.arabic_name;
                 if (item.type == 'variable') {
                     string += '-' + item.variation;
                 }
@@ -225,7 +225,7 @@ $(document).ready(function() {
                     ' (Out of stock) </li>';
                 return $(string).appendTo(ul);
             } else {
-                var string = '<div>' + item.name;
+                var string = '<div>' + item.name + item.arabic_name;
                 if (item.type == 'variable') {
                     string += '-' + item.variation;
                 }

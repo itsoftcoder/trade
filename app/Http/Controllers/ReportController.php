@@ -350,7 +350,7 @@ class ReportController extends Controller
                     if ($row->type == 'variable') {
                         $name .= ' - ' . $row->product_variation . '-' . $row->variation_name;
                     }
-                    return $name;
+                    return $name." -- ".$row->arabic_name;
                 })
                 ->editColumn('total_sold', function ($row) {
                     $total_sold = 0;
