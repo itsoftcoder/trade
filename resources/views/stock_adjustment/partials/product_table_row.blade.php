@@ -1,6 +1,6 @@
 <tr class="product_row">
     <td>
-        {{$product->product_name}}
+        {{$product->product_name}} -- {{ $product->arabic_name }}
         <br/>
         {{$product->sub_sku}}
 

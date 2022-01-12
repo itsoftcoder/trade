@@ -231,4 +231,11 @@
 @stop
 @section('javascript')
 	<script src="{{ asset('js/labels.js?v=' . $asset_v) }}"></script>
+	<script>
+		$(document).ready(function(){
+			$('body').on('click','.remove-searching-product-for-barcode-label',function(){
+				$(this).parents('tr').remove();
+			})
+		})
+	</script>
 @endsection

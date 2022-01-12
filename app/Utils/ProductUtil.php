@@ -778,6 +778,7 @@ class ProductUtil extends Util
         $products = $product->select(
             'products.id as product_id',
             'products.name as product_name',
+            'products.arabic_name as arabic_name',
             'v.id as variation_id',
             'v.name as variation_name'
         )
@@ -1697,6 +1698,7 @@ class ProductUtil extends Util
             ->leftjoin('variation_location_details as vld', 'variations.id', '=', 'vld.variation_id')
             ->leftjoin('business_locations as l', 'vld.location_id', '=', 'l.id')
             ->join('product_variations as pv', 'variations.product_variation_id', '=', 'pv.id')
+            // ->join('purchase_lines as pur', 'p.id', '=', 'pur.product_id')
             ->where('p.business_id', $business_id)
             ->whereIn('p.type', ['single', 'variable']);
 
@@ -1788,8 +1790,20 @@ class ProductUtil extends Util
             DB::raw("(SELECT SUM( COALESCE(pl.quantity - ($pl_query_string), 0) * purchase_price_inc_tax) FROM transactions 
                   JOIN purchase_lines AS pl ON transactions.id=pl.transaction_id
                   WHERE (transactions.status='received' OR transactions.type='purchase_return')  AND transactions.location_id=vld.location_id 
-                  AND (pl.variation_id=variations.id)) as stock_price"),
+                  AND (pl.variation_id=variations.id)) as current_stock_price"),
+
+            DB::raw("(SELECT SUM(pl.quantity * pl.purchase_price) FROM transactions 
+                  JOIN purchase_lines AS pl ON transactions.id=pl.transaction_id
+                  WHERE (transactions.status='received' OR transactions.type='purchase_return')  AND transactions.location_id=vld.location_id 
+                  AND (pl.variation_id=variations.id)) as total_stock_price"),
+
+            DB::raw("(SELECT SUM(pl.quantity) FROM transactions 
+                  JOIN purchase_lines AS pl ON transactions.id=pl.transaction_id
+                  WHERE (transactions.status='received' OR transactions.type='purchase_return')  AND transactions.location_id=vld.location_id 
+                  AND (pl.variation_id=variations.id)) as total_stock"),
+                  
             DB::raw("SUM(vld.qty_available) as stock"),
+            // DB::raw("SUM(pur.qunatity) as total_stock"),
             'variations.sub_sku as sku',
             'p.name as product',
             'p.arabic_name as arabic_name',

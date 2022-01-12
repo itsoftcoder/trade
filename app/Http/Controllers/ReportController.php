@@ -101,6 +101,7 @@ class ReportController extends Controller
 
             // $data['closing_stock'] = $data['closing_stock'] - $data['total_sell_return'];
 
+        // dump($data);
             return view('report.partials.profit_loss_details', compact('data'))->render();
         }
 
@@ -345,12 +346,20 @@ class ReportController extends Controller
                         return '--';
                     }
                 })
+                ->editColumn('total_stock', function ($row) {
+                    if ($row->enable_stock) {
+                        $total_stock = $row->total_stock ? $row->total_stock : 0 ;
+                        return  '<span class="total_stock" data-orig-value="' . (float)$total_stock . '" data-unit="' . $row->unit . '"> ' . $this->transactionUtil->num_f($total_stock, false, null, true) . '</span>' . ' ' . $row->unit ;
+                    } else {
+                        return '--';
+                    }
+                })
                 ->editColumn('product', function ($row) {
-                    $name = $row->product;
+                    $name = $row->product." -- ".$row->arabic_name;
                     if ($row->type == 'variable') {
                         $name .= ' - ' . $row->product_variation . '-' . $row->variation_name;
                     }
-                    return $name." -- ".$row->arabic_name;
+                    return $name;
                 })
                 ->editColumn('total_sold', function ($row) {
                     $total_sold = 0;
@@ -389,10 +398,17 @@ class ReportController extends Controller
 
                     return $html;
                 })
-                ->editColumn('stock_price', function ($row) {
+                ->editColumn('total_stock_price', function ($row) {
                     $html = '<span class="total_stock_price" data-orig-value="'
-                        . $row->stock_price . '">' .
-                        $this->transactionUtil->num_f($row->stock_price, true) . '</span>';
+                        . $row->total_stock_price . '">' .
+                        $this->transactionUtil->num_f($row->total_stock_price, true) . '</span>';
+
+                    return $html;
+                })
+                ->editColumn('current_stock_price', function ($row) {
+                    $html = '<span class="current_stock_price" data-orig-value="'
+                        . $row->current_stock_price . '">' .
+                        $this->transactionUtil->num_f($row->current_stock_price, true) . '</span>';
 
                     return $html;
                 })
@@ -415,7 +431,7 @@ class ReportController extends Controller
                 ->removeColumn('id');
 
             $raw_columns  = ['unit_price', 'total_transfered', 'total_sold',
-                    'total_adjusted', 'stock', 'stock_price', 'stock_value_by_sale_price', 'potential_profit'];
+                    'total_adjusted', 'stock', 'total_stock', 'current_stock_price', 'total_stock_price','stock_value_by_sale_price', 'potential_profit'];
 
             if ($show_manufacturing_data) {
                 $datatable->editColumn('total_mfg_stock', function ($row) {
@@ -1570,6 +1586,7 @@ class ReportController extends Controller
                     ->where('t.type', 'purchase')
                     ->select(
                         'p.name as product_name',
+                        'p.arabic_name as arabic_name',
                         'p.type as product_type',
                         'pv.name as product_variation',
                         'v.name as variation_name',
@@ -1612,7 +1629,7 @@ class ReportController extends Controller
 
             return Datatables::of($query)
                 ->editColumn('product_name', function ($row) {
-                    $product_name = $row->product_name;
+                    $product_name = $row->product_name." ".$row->arabic_name;
                     if ($row->product_type == 'variable') {
                         $product_name .= ' - ' . $row->product_variation . ' - ' . $row->variation_name;
                     }
@@ -1684,6 +1701,7 @@ class ReportController extends Controller
                 ->where('t.status', 'final')
                 ->select(
                     'p.name as product_name',
+                    'p.arabic_name as arabic_name',
                     'p.type as product_type',
                     'pv.name as product_variation',
                     'v.name as variation_name',
@@ -1749,7 +1767,7 @@ class ReportController extends Controller
 
             return Datatables::of($query)
                 ->editColumn('product_name', function ($row) {
-                    $product_name = $row->product_name;
+                    $product_name = $row->product_name." ".$row->arabic_name;
                     if ($row->product_type == 'variable') {
                         $product_name .= ' - ' . $row->product_variation . ' - ' . $row->variation_name;
                     }
@@ -1855,6 +1873,7 @@ class ReportController extends Controller
                 ->where('t.status', 'final')
                 ->select(
                     'p.name as product_name',
+                    'p.arabic_name as arabic_name',
                     'p.type as product_type',
                     'pv.name as product_variation',
                     'v.name as variation_name',
@@ -1914,7 +1933,7 @@ class ReportController extends Controller
 
             return Datatables::of($query)
                 ->editColumn('product_name', function ($row) {
-                    $product_name = $row->product_name;
+                    $product_name = $row->product_name." ".$row->arabic_name;
                     if ($row->product_type == 'variable') {
                         $product_name .= ' - ' . $row->product_variation . ' - ' . $row->variation_name;
                     }
@@ -2461,6 +2480,7 @@ class ReportController extends Controller
                 ->where('t.status', 'final')
                 ->select(
                     'p.name as product_name',
+                    'p.arabic_name as arabic_name',
                     'p.enable_stock',
                     'p.type as product_type',
                     'pv.name as product_variation',
@@ -2520,7 +2540,7 @@ class ReportController extends Controller
 
             return Datatables::of($query)
                 ->editColumn('product_name', function ($row) {
-                    $product_name = $row->product_name;
+                    $product_name = $row->product_name." ".$row->arabic_name;
                     if ($row->product_type == 'variable') {
                         $product_name .= ' - ' . $row->product_variation . ' - ' . $row->variation_name;
                     }
@@ -2982,7 +3002,7 @@ class ReportController extends Controller
         if ($by == 'product') {
             $query->join('variations as V', 'transaction_sell_lines.variation_id', '=', 'V.id')
                 ->leftJoin('product_variations as PV', 'PV.id', '=', 'V.product_variation_id')
-                ->addSelect(DB::raw("IF(P.type='variable', CONCAT(P.name, ' - ', PV.name, ' - ', V.name, ' (', V.sub_sku, ')'), CONCAT(P.name, ' (', P.sku, ')')) as product"))
+                ->addSelect(DB::raw("IF(P.type='variable', CONCAT(P.name, ' - ', PV.name, ' - ', V.name, ' (', V.sub_sku, ')'), CONCAT(P.name,  P.arabic_name, ' (', P.sku, ')')) as product"))
                 ->groupBy('V.id');
         }
 
@@ -3140,6 +3160,7 @@ class ReportController extends Controller
                     'v.sub_sku as sku',
                     'p.type as product_type',
                     'p.name as product_name',
+                    'p.arabic_name as arabic_name',
                     'v.name as variation_name',
                     'pv.name as product_variation',
                     'u.short_name as unit',
@@ -3214,7 +3235,7 @@ class ReportController extends Controller
 
             return Datatables::of($query)
                 ->editColumn('product_name', function ($row) {
-                    $product_name = $row->product_name;
+                    $product_name = $row->product_name." ".$row->arabic_name;
                     if ($row->product_type == 'variable') {
                         $product_name .= ' - ' . $row->product_variation . ' - ' . $row->variation_name;
                     }
