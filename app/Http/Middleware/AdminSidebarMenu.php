@@ -696,9 +696,9 @@ class AdminSidebarMenu
             }
 
             //Backup menu
-            if (auth()->user()->can('backup')) {
+            // if (auth()->user()->can('backup')) {
                 $menu->url(action('BackUpController@index'), __('lang_v1.backup'), ['icon' => 'fa fas fa-hdd', 'active' => request()->segment(1) == 'backup'])->order(60);
-            }
+            // }
 
             //Modules menu
             if (auth()->user()->can('manage_modules')) {

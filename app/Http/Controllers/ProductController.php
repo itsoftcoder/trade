@@ -2245,6 +2245,7 @@ class ProductController extends Controller
             $stock_details = $this->productUtil->getVariationStockDetails($business_id, $id, request()->input('location_id'));
             $stock_history = $this->productUtil->getVariationStockHistory($business_id, $id, request()->input('location_id'));
 
+            // dump($stock_details);
             return view('product.stock_history_details')
                 ->with(compact('stock_details', 'stock_history'));
         }
@@ -2256,7 +2257,7 @@ class ProductController extends Controller
         //Get all business locations
         $business_locations = BusinessLocation::forDropdown($business_id);
         
-
+        // dump($product);
         return view('product.stock_history')
                 ->with(compact('product', 'business_locations'));
     }

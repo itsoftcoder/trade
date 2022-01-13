@@ -12,7 +12,7 @@
 <section class="content">
 <div class="row">
     <div class="col-md-12">
-    @component('components.widget', ['title' => $product->name])
+    @component('components.widget', ['title' => $product->name." -- ".$product->arabic_name])
         <div class="col-md-3">
             <div class="form-group">
                 {!! Form::label('location_id',  __('purchase.business_location') . ':') !!}
