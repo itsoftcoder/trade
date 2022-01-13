@@ -496,6 +496,7 @@ class PurchaseController extends Controller
 
         $statuses = $this->productUtil->orderStatuses();
 
+        // dd($purchase);
         return view('purchase.show')
                 ->with(compact('taxes', 'purchase', 'payment_methods', 'purchase_taxes', 'activities', 'statuses', 'purchase_order_nos', 'purchase_order_dates'));
     }
@@ -944,6 +945,7 @@ class PurchaseController extends Controller
                 ->select(
                     'products.id as product_id',
                     'products.name',
+                    'products.arabic_name',
                     'products.type',
                     // 'products.sku as sku',
                     'variations.id as variation_id',
@@ -963,6 +965,7 @@ class PurchaseController extends Controller
             $products_array = [];
             foreach ($products as $product) {
                 $products_array[$product->product_id]['name'] = $product->name;
+                $products_array[$product->product_id]['arabic_name'] = $product->arabic_name;
                 $products_array[$product->product_id]['sku'] = $product->sub_sku;
                 $products_array[$product->product_id]['type'] = $product->type;
                 $products_array[$product->product_id]['variations'][]
@@ -980,7 +983,7 @@ class PurchaseController extends Controller
                 foreach ($products_array as $key => $value) {
                     if ($no_of_records > 1 && $value['type'] != 'single' && !$only_variations) {
                         $result[] = [ 'id' => $i,
-                                    'text' => $value['name'] . ' - ' . $value['sku'],
+                                    'text' => $value['name'] . ' - '.$value['arabic_name'].' - ' . $value['sku'],
                                     'variation_id' => 0,
                                     'product_id' => $key
                                 ];
@@ -993,7 +996,7 @@ class PurchaseController extends Controller
                         }
                         $i++;
                         $result[] = [ 'id' => $i,
-                                            'text' => $text . ' - ' . $variation['sub_sku'],
+                                            'text' => $text . ' - '.$value['arabic_name'].' - ' . $variation['sub_sku'],
                                             'product_id' => $key ,
                                             'variation_id' => $variation['variation_id'],
                                         ];

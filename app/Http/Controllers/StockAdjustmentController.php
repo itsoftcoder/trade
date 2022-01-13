@@ -274,6 +274,7 @@ class StockAdjustmentController extends Controller
            ->latest()
            ->get();
 
+        //    dump($stock_adjustment);
         return view('stock_adjustment.show')
                 ->with(compact('stock_adjustment', 'lot_n_exp_enabled', 'activities'));
     }

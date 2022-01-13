@@ -79,10 +79,12 @@ $(document).ready(function() {
             { data: 'product', name: 'p.name' },
             { data: 'location_name', name: 'l.name' },
             { data: 'unit_price', name: 'variations.sell_price_inc_tax' },
+            { data: 'total_stock', name: 'total_stock', searchable: false },
             { data: 'stock', name: 'stock', searchable: false },
         ];
         if ($('th.stock_price').length) {
-            stock_report_cols.push({ data: 'stock_price', name: 'stock_price', searchable: false });
+            stock_report_cols.push({ data: 'total_stock_price', name: 'total_stock_price', searchable: false });
+            stock_report_cols.push({ data: 'current_stock_price', name: 'current_stock_price', searchable: false });
             stock_report_cols.push({ data: 'stock_value_by_sale_price', name: 'stock_value_by_sale_price', searchable: false, orderable: false });
             stock_report_cols.push({ data: 'potential_profit', name: 'potential_profit', searchable: false, orderable: false });
         }
@@ -119,15 +121,21 @@ $(document).ready(function() {
         },
         "footerCallback": function ( row, data, start, end, display ) {
             var footer_total_stock = 0;
+            var footer_current_stock = 0;
             var footer_total_sold = 0;
             var footer_total_transfered = 0;
             var total_adjusted = 0;
             var total_stock_price = 0;
+            var current_stock_price = 0;
             var footer_stock_value_by_sale_price = 0;
             var total_potential_profit = 0;
             var footer_total_mfg_stock = 0;
             for (var r in data){
-                footer_total_stock += $(data[r].stock).data('orig-value') ? 
+                footer_total_stock += $(data[r].total_stock).data('orig-value') ? 
+                parseFloat($(data[r].total_stock).data('orig-value')) : 0;
+              
+
+                footer_current_stock += $(data[r].stock).data('orig-value') ? 
                 parseFloat($(data[r].stock).data('orig-value')) : 0;
 
                 footer_total_sold += $(data[r].total_sold).data('orig-value') ? 
@@ -139,8 +147,11 @@ $(document).ready(function() {
                 total_adjusted += $(data[r].total_adjusted).data('orig-value') ? 
                 parseFloat($(data[r].total_adjusted).data('orig-value')) : 0;
 
-                total_stock_price += $(data[r].stock_price).data('orig-value') ? 
-                parseFloat($(data[r].stock_price).data('orig-value')) : 0;
+                total_stock_price += $(data[r].total_stock_price).data('orig-value') ? 
+                parseFloat($(data[r].total_stock_price).data('orig-value')) : 0;
+
+                current_stock_price += $(data[r].current_stock_price).data('orig-value') ? 
+                parseFloat($(data[r].current_stock_price).data('orig-value')) : 0;
 
                 footer_stock_value_by_sale_price += $(data[r].stock_value_by_sale_price).data('orig-value') ? 
                 parseFloat($(data[r].stock_value_by_sale_price).data('orig-value')) : 0;
@@ -152,8 +163,10 @@ $(document).ready(function() {
                 parseFloat($(data[r].total_mfg_stock).data('orig-value')) : 0;
             }
 
-            $('.footer_total_stock').html(__currency_trans_from_en(footer_total_stock, false));
-            $('.footer_total_stock_price').html(__currency_trans_from_en(total_stock_price));
+            $('.footer_total_stock').html(footer_total_stock, false);
+            $('.footer_current_stock').html(__currency_trans_from_en(footer_current_stock, false));
+            $('.footer_total_stock_price').html(total_stock_price);
+            $('.footer_current_stock_price').html(__currency_trans_from_en(current_stock_price));
             $('.footer_total_sold').html(__currency_trans_from_en(footer_total_sold, false));
             $('.footer_total_transfered').html(__currency_trans_from_en(footer_total_transfered, false));
             $('.footer_total_adjusted').html(__currency_trans_from_en(total_adjusted, false));

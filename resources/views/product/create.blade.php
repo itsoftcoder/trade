@@ -87,7 +87,15 @@
         <div class="col-sm-4 @if(!session('business.enable_category')) hide @endif">
           <div class="form-group">
             {!! Form::label('category_id', __('product.category') . ':') !!}
+            <div class="input-group">
               {!! Form::select('category_id', $categories, !empty($duplicate_product->category_id) ? $duplicate_product->category_id : null, ['placeholder' => __('messages.please_select'), 'class' => 'form-control select2']); !!}
+              <span class="input-group-btn">
+                
+                  <button type="button" class="btn btn-default bg-white btn-flat btn-modal" data-target="#category_modal" data-toggle="modal">
+                  <i class="fa fa-plus-circle text-primary fa-lg"></i></button>
+              
+              </span>
+            </div>
           </div>
         </div>
 
@@ -370,12 +378,76 @@
 
 ?>
   
+  <div class="modal fade category_modal" id="category_modal" tabindex="-1" role="dialog" 
+    	aria-labelledby="gridSystemModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+      
+          {!! Form::open(['method' => 'post', 'id' => 'category_add_form' ]) !!}
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">@lang( 'messages.add' )</h4>
+          </div>
+      
+          <div class="modal-body">
+            <input type="hidden" name="category_type" value="{{$category_type}}">
+            @php
+              $name_label = !empty($module_category_data['taxonomy_label']) ? $module_category_data['taxonomy_label'] : __( 'category.category_name' );
+              $cat_code_enabled = isset($module_category_data['enable_taxonomy_code']) && !$module_category_data['enable_taxonomy_code'] ? false : true;
+      
+              $cat_code_label = !empty($module_category_data['taxonomy_code_label']) ? $module_category_data['taxonomy_code_label'] : __( 'category.code' );
+      
+              $enable_sub_category = isset($module_category_data['enable_sub_taxonomy']) && !$module_category_data['enable_sub_taxonomy'] ? false : true;
+      
+              $category_code_help_text = !empty($module_category_data['taxonomy_code_help_text']) ? $module_category_data['taxonomy_code_help_text'] : __('lang_v1.category_code_help');
+            @endphp
+            <div class="form-group">
+              {!! Form::label('name', $name_label . ':*') !!}
+                {!! Form::text('name', null, ['class' => 'form-control', 'required', 'placeholder' => $name_label]); !!}
+            </div>
+            @if($cat_code_enabled)
+            <div class="form-group">
+              {!! Form::label('short_code', $cat_code_label . ':') !!}
+              {!! Form::text('short_code', null, ['class' => 'form-control', 'placeholder' => $cat_code_label]); !!}
+              <p class="help-block">{!! $category_code_help_text !!}</p>
+            </div>
+            @endif
+            <div class="form-group">
+              {!! Form::label('description', __( 'lang_v1.description' ) . ':') !!}
+              {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => __( 'lang_v1.description'), 'rows' => 3]); !!}
+            </div>
+            @if(!empty($parent_categories) && $enable_sub_category)
+              <div class="form-group">
+                  <div class="checkbox">
+                    <label>
+                       {!! Form::checkbox('add_as_sub_cat', 1, false,[ 'class' => 'toggler', 'data-toggle_id' => 'parent_cat_div' ]); !!} @lang( 'lang_v1.add_as_sub_txonomy' )
+                    </label>
+                  </div>
+              </div>
+              <div class="form-group hide" id="parent_cat_div">
+                {!! Form::label('parent_id', __( 'category.select_parent_category' ) . ':') !!}
+                {!! Form::select('parent_id', $parent_categories, null, ['class' => 'form-control']); !!}
+              </div>
+            @endif
+          </div>
+      
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">@lang( 'messages.save' )</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">@lang( 'messages.close' )</button>
+          </div>
+      
+          {!! Form::close() !!}
+      
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
 </section>
 <!-- /.content -->
 
 @endsection
 
 @section('javascript')
+
   @php $asset_v = env('APP_VERSION'); @endphp
   <script src="{{ asset('js/product.js?v=' . $asset_v) }}"></script>
 
@@ -416,6 +488,39 @@
     
                 
             });
+
+            $('#category_add_form').submit(function(e){
+              e.preventDefault();
+              var form = $(this);
+              var data = form.serialize();
+
+              $.ajax({
+                  url : @json(action('ProductController@categoryQuickAdd')),
+                  method: 'POST',
+                  // data: $('#category_add_form').serializeArray(),
+                  dataType: 'json',
+                  data: data,
+                  beforeSend: function(xhr) {
+                      __disable_submit_button(form.find('button[type="submit"]'));
+                  },
+                  success: function(result) {
+                      if (result.success == true) {
+                          var newOption = new Option(result.data.name, result.data.id, true, true);
+                          // Append it to the select
+                          $('#category_id')
+                              .append(newOption)
+                              .trigger('change');
+                          $('#category_modal').modal('hide');
+                          toastr.success(result.msg);
+                      } else {
+                          toastr.error(result.msg);
+                      }
+                  },
+              });
+              
+            })
         });
     </script>
+
+
 @endsection
