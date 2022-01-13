@@ -15,7 +15,7 @@
 					<tr>
 						<td>{{ $details->sub_sku}}</td>
 						<td>
-							{{ $details->product . '-' . $details->product_variation . 
+							{{ $details->product . '-' .$details->arabic_name. ' '.$details->product_variation . 
 							'-' .  $details->variation }}
 						</td>
 						<td><span class="display_currency" data-currency_symbol=true>{{$details->sell_price_inc_tax}}</span></td>

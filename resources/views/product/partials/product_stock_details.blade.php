@@ -26,7 +26,7 @@
 			                        $name .= ' - ' . $product->product_variation . '-' . $product->variation_name;
 			                    }
 			                    @endphp
-			                    {{$name}}
+			                    {{$name}} {{ $product->arabic_name }}
 	            			</td>
 	            			<td>{{$product->location_name}}</td>
 	            			<td>

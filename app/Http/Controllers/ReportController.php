@@ -337,6 +337,7 @@ class ReportController extends Controller
                 return view('product.partials.product_stock_details')->with(compact('product_stock_details'));
             }
 
+
             $datatable =  Datatables::of($products)
                 ->editColumn('stock', function ($row) {
                     if ($row->enable_stock) {
@@ -368,6 +369,25 @@ class ReportController extends Controller
                     }
 
                     return '<span data-is_quantity="true" class="total_sold" data-orig-value="' . $total_sold . '" data-unit="' . $row->unit . '" >' . $this->transactionUtil->num_f($total_sold, false, null, true) . '</span> ' . $row->unit;
+                })
+                ->editColumn('total_sold_profit', function ($row) {
+                    $total_sold = 0;
+                    if ($row->total_sold) {
+                        $total_sold =  (float)$row->total_sold;
+                    }
+
+                    $unit_selling_price = (float)$row->group_price > 0 ? $row->group_price : $row->unit_price;
+                    $total_sold_sale_price = (float)$total_sold * (float)$unit_selling_price;
+
+                    $total_sold_price = (float)$row->total_stock_price - (float)$row->current_stock_price;
+
+                    $total_sold_profit = (float)$total_sold_sale_price - (float)$total_sold_price;
+
+                    $html = '<span class="total_solid_profit" data-orig-value="'
+                        . $total_sold_profit . '">' .
+                        $this->transactionUtil->num_f($total_sold_profit, true) . '</span>';
+
+                    return $html;
                 })
                 ->editColumn('total_transfered', function ($row) {
                     $total_transfered = 0;
@@ -412,38 +432,55 @@ class ReportController extends Controller
 
                     return $html;
                 })
+                ->editColumn('total_stock_value_by_sale_price', function ($row) {
+                    $total_stock = $row->total_stock ? $row->total_stock : 0 ;
+                    $unit_selling_price = (float)$row->group_price > 0 ? $row->group_price : $row->unit_price;
+                    $total_stock_price = $total_stock * $unit_selling_price;
+                    return  '<span class="total_stock_value_by_sale_price" data-orig-value="' . (float)$total_stock_price . '" > ' . $this->transactionUtil->num_f($total_stock_price, true) . '</span>';
+                })
                 ->editColumn('stock_value_by_sale_price', function ($row) {
                     $stock = $row->stock ? $row->stock : 0 ;
                     $unit_selling_price = (float)$row->group_price > 0 ? $row->group_price : $row->unit_price;
                     $stock_price = $stock * $unit_selling_price;
                     return  '<span class="stock_value_by_sale_price" data-orig-value="' . (float)$stock_price . '" > ' . $this->transactionUtil->num_f($stock_price, true) . '</span>';
                 })
-                ->addColumn('potential_profit', function ($row) {
+
+                ->addColumn('potential_profit_total_stock', function ($row) {
+                    $total_stock = $row->total_stock ? $row->total_stock : 0 ;
+                    $unit_selling_price = (float)$row->group_price > 0 ? $row->group_price : $row->unit_price;
+                    $stock_price_by_sp_total_stock = $total_stock * $unit_selling_price;
+                    $potential_profit_total_stock = (float)$stock_price_by_sp_total_stock - (float)$row->total_stock_price;
+
+                    return  '<span class="potential_profit_total_stock" data-orig-value="' . (float)$potential_profit_total_stock . '" > ' . $this->transactionUtil->num_f($potential_profit_total_stock, true) . '</span>';
+                })
+
+                ->addColumn('potential_profit_current_stock', function ($row) {
                     $stock = $row->stock ? $row->stock : 0 ;
                     $unit_selling_price = (float)$row->group_price > 0 ? $row->group_price : $row->unit_price;
-                    $stock_price_by_sp = $stock * $unit_selling_price;
-                    $potential_profit = (float)$stock_price_by_sp - (float)$row->stock_price;
+                    $stock_price_by_sp_current_stock = $stock * $unit_selling_price;
+                    $potential_profit_current_stock = (float)$stock_price_by_sp_current_stock - (float)$row->current_stock_price;
 
-                    return  '<span class="potential_profit" data-orig-value="' . (float)$potential_profit . '" > ' . $this->transactionUtil->num_f($potential_profit, true) . '</span>';
+                    return  '<span class="potential_profit_current_stock" data-orig-value="' . (float)$potential_profit_current_stock . '" > ' . $this->transactionUtil->num_f($potential_profit_current_stock, true) . '</span>';
                 })
                 ->removeColumn('enable_stock')
                 ->removeColumn('unit')
                 ->removeColumn('id');
 
-            $raw_columns  = ['unit_price', 'total_transfered', 'total_sold',
-                    'total_adjusted', 'stock', 'total_stock', 'current_stock_price', 'total_stock_price','stock_value_by_sale_price', 'potential_profit'];
+            $raw_columns  = ['unit_price', 'total_transfered', 'total_sold', 'total_sold_profit',
+                    'total_adjusted', 'stock', 'total_stock', 'current_stock_price', 'total_stock_price','total_stock_value_by_sale_price','stock_value_by_sale_price', 'potential_profit_total_stock','potential_profit_current_stock'];
 
-            if ($show_manufacturing_data) {
-                $datatable->editColumn('total_mfg_stock', function ($row) {
-                    $total_mfg_stock = 0;
-                    if ($row->total_mfg_stock) {
-                        $total_mfg_stock =  (float)$row->total_mfg_stock;
-                    }
+            // if ($show_manufacturing_data) {
+            //     $datatable->editColumn('total_mfg_stock', function ($row) {
+            //         $total_mfg_stock = 0;
+            //         if ($row->total_mfg_stock) {
+            //             $total_mfg_stock =  (float)$row->total_mfg_stock;
+            //         }
 
-                    return '<span data-is_quantity="true" class="total_mfg_stock"  data-orig-value="' . $total_mfg_stock . '" data-unit="' . $row->unit . '" >' . $this->transactionUtil->num_f($total_mfg_stock, false, null, true) . '</span> ' . $row->unit;
-                });
-                $raw_columns[] = 'total_mfg_stock';
-            }
+            //         return '<span data-is_quantity="true" class="total_mfg_stock"  data-orig-value="' . $total_mfg_stock . '" data-unit="' . $row->unit . '" >' . $this->transactionUtil->num_f($total_mfg_stock, false, null, true) . '</span> ' . $row->unit;
+            //     });
+            //     $raw_columns[] = 'total_mfg_stock';
+            // }
+            // dump($datatable->rawColumns($raw_columns)->make(true));
 
             return $datatable->rawColumns($raw_columns)->make(true);
         }
@@ -495,6 +532,7 @@ class ReportController extends Controller
 
             $product_details =  $query->select(
                 'products.name as product',
+                'products.arabic_name as arabic_name',
                 'u.short_name as unit',
                 'pv.name as product_variation',
                 'v.name as variation',
@@ -508,10 +546,12 @@ class ReportController extends Controller
 
                         WHERE transactions.status='final' AND transactions.type='sell' $location_filter 
                         AND (TSL.variation_id=v.id OR TPL.variation_id=v.id)) as total_sold"),
+
                 DB::raw("(SELECT SUM(IF(transactions.type='sell_transfer', TSL.quantity, 0) ) FROM transactions 
                         LEFT JOIN transaction_sell_lines AS TSL ON transactions.id=TSL.transaction_id
                         WHERE transactions.status='final' AND transactions.type='sell_transfer' $location_filter 
                         AND (TSL.variation_id=v.id)) as total_transfered"),
+
                 DB::raw("(SELECT SUM(IF(transactions.type='stock_adjustment', SAL.quantity, 0) ) FROM transactions 
                         LEFT JOIN stock_adjustment_lines AS SAL ON transactions.id=SAL.transaction_id
                         WHERE transactions.status='received' AND transactions.type='stock_adjustment' $location_filter 
@@ -522,6 +562,7 @@ class ReportController extends Controller
                         ->groupBy('v.id')
                         ->get();
 
+                        dump($product_details);
             return view('report.stock_details')
                         ->with(compact('product_details'));
         }
@@ -2714,49 +2755,61 @@ class ReportController extends Controller
                         LEFT JOIN transaction_sell_lines AS TSL ON transactions.id=TSL.transaction_id
                         WHERE transactions.status='final' AND transactions.type='sell' AND transactions.location_id=$location_id 
                         AND TSL.variation_id=variations.id) as total_sold"),
+
                 DB::raw("(SELECT SUM(COALESCE(TSL.quantity_returned, 0)) FROM transactions 
                         LEFT JOIN transaction_sell_lines AS TSL ON transactions.id=TSL.transaction_id
                         WHERE transactions.status='final' AND transactions.type='sell' AND transactions.location_id=$location_id 
                         AND TSL.variation_id=variations.id) as total_sell_return"),
+
                 DB::raw("(SELECT SUM(COALESCE(TSL.quantity,0)) FROM transactions 
                         LEFT JOIN transaction_sell_lines AS TSL ON transactions.id=TSL.transaction_id
                         WHERE transactions.status='final' AND transactions.type='sell_transfer' AND transactions.location_id=$location_id 
                         AND TSL.variation_id=variations.id) as total_sell_transfered"),
+
                 DB::raw("(SELECT SUM(COALESCE(PL.quantity,0)) FROM transactions 
                         LEFT JOIN purchase_lines AS PL ON transactions.id=PL.transaction_id
                         WHERE transactions.status='received' AND transactions.type='purchase_transfer' AND transactions.location_id=$location_id 
                         AND PL.variation_id=variations.id) as total_purchase_transfered"),
+
                 DB::raw("(SELECT SUM(COALESCE(SAL.quantity, 0)) FROM transactions 
                         LEFT JOIN stock_adjustment_lines AS SAL ON transactions.id=SAL.transaction_id
                         WHERE transactions.type='stock_adjustment' AND transactions.location_id=$location_id 
                         AND SAL.variation_id=variations.id) as total_adjusted"),
+
                 DB::raw("(SELECT SUM(COALESCE(PL.quantity, 0)) FROM transactions 
                         LEFT JOIN purchase_lines AS PL ON transactions.id=PL.transaction_id
                         WHERE transactions.status='received' AND transactions.type='purchase' AND transactions.location_id=$location_id
                         AND PL.variation_id=variations.id) as total_purchased"),
+
                 DB::raw("(SELECT SUM(COALESCE(PL.quantity_returned, 0)) FROM transactions 
                         LEFT JOIN purchase_lines AS PL ON transactions.id=PL.transaction_id
                         WHERE transactions.status='received' AND transactions.type='purchase' AND transactions.location_id=$location_id
                         AND PL.variation_id=variations.id) as total_purchase_return"),
+
                 DB::raw("(SELECT SUM(COALESCE(PL.quantity_returned, 0)) FROM transactions 
                         LEFT JOIN purchase_lines AS PL ON transactions.id=PL.transaction_id
                         WHERE transactions.type='purchase_return' AND transactions.location_id=$location_id
                         AND PL.variation_id=variations.id) as total_combined_purchase_return"),
+
                 DB::raw("(SELECT SUM(COALESCE(PL.quantity, 0)) FROM transactions 
                         LEFT JOIN purchase_lines AS PL ON transactions.id=PL.transaction_id
                         WHERE transactions.type='opening_stock' AND transactions.status='received' AND transactions.location_id=$location_id
                         AND PL.variation_id=variations.id) as total_opening_stock"),
+
                 DB::raw("(SELECT SUM(COALESCE(PL.quantity, 0)) FROM transactions 
                         LEFT JOIN purchase_lines AS PL ON transactions.id=PL.transaction_id
                         WHERE transactions.status='received' AND transactions.type='production_purchase' AND transactions.location_id=$location_id
                         AND PL.variation_id=variations.id) as total_manufactured"),
+
                 DB::raw("(SELECT SUM(COALESCE(TSL.quantity, 0)) FROM transactions 
                         LEFT JOIN transaction_sell_lines AS TSL ON transactions.id=TSL.transaction_id
                         WHERE transactions.status='final' AND transactions.type='production_sell' AND transactions.location_id=$location_id 
                         AND TSL.variation_id=variations.id) as total_ingredients_used"),
+
                 DB::raw("SUM(vld.qty_available) as stock"),
                 'variations.sub_sku as sub_sku',
                 'p.name as product',
+                'p.arabic_name as arabic_name',
                 'p.id as product_id',
                 'p.type',
                 'p.sku as sku',

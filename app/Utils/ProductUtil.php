@@ -1698,7 +1698,7 @@ class ProductUtil extends Util
             ->leftjoin('variation_location_details as vld', 'variations.id', '=', 'vld.variation_id')
             ->leftjoin('business_locations as l', 'vld.location_id', '=', 'l.id')
             ->join('product_variations as pv', 'variations.product_variation_id', '=', 'pv.id')
-            // ->join('purchase_lines as pur', 'p.id', '=', 'pur.product_id')
+           
             ->where('p.business_id', $business_id)
             ->whereIn('p.type', ['single', 'variable']);
 
@@ -1780,13 +1780,16 @@ class ProductUtil extends Util
                   JOIN transaction_sell_lines AS TSL ON transactions.id=TSL.transaction_id
                   WHERE transactions.status='final' AND transactions.type='sell' AND transactions.location_id=vld.location_id
                   AND TSL.variation_id=variations.id) as total_sold"),
+
             DB::raw("(SELECT SUM(IF(transactions.type='sell_transfer', TSL.quantity, 0) ) FROM transactions 
                   JOIN transaction_sell_lines AS TSL ON transactions.id=TSL.transaction_id
                   WHERE transactions.status='final' AND transactions.type='sell_transfer' AND transactions.location_id=vld.location_id AND (TSL.variation_id=variations.id)) as total_transfered"),
+
             DB::raw("(SELECT SUM(IF(transactions.type='stock_adjustment', SAL.quantity, 0) ) FROM transactions 
                   JOIN stock_adjustment_lines AS SAL ON transactions.id=SAL.transaction_id
                   WHERE transactions.type='stock_adjustment' AND transactions.location_id=vld.location_id 
                     AND (SAL.variation_id=variations.id)) as total_adjusted"),
+                    
             DB::raw("(SELECT SUM( COALESCE(pl.quantity - ($pl_query_string), 0) * purchase_price_inc_tax) FROM transactions 
                   JOIN purchase_lines AS pl ON transactions.id=pl.transaction_id
                   WHERE (transactions.status='received' OR transactions.type='purchase_return')  AND transactions.location_id=vld.location_id 
@@ -1892,6 +1895,7 @@ class ProductUtil extends Util
                 DB::raw("SUM(IF(t.type='purchase_transfer', pl.quantity, 0)) as total_purchase_transfer"),
                 'variations.sub_sku as sub_sku',
                 'p.name as product',
+                'p.arabic_name as arabic_name',
                 'p.type',
                 'p.sku',
                 'p.id as product_id',
@@ -1924,9 +1928,9 @@ class ProductUtil extends Util
             ->first();
 
         if ($purchase_details->type == 'variable') {
-            $product_name = $purchase_details->product . ' - ' . $purchase_details->product_variation . ' - ' . $purchase_details->variation_name . ' (' . $purchase_details->sub_sku . ')';
+            $product_name = $purchase_details->product . ' - '.' - '.$purchase_details->arabic_name . $purchase_details->product_variation . ' - ' . $purchase_details->variation_name . ' (' . $purchase_details->sub_sku . ')';
         } else {
-            $product_name = $purchase_details->product . ' (' . $purchase_details->sku . ')';
+            $product_name = $purchase_details->product .' - '.$purchase_details->arabic_name . ' (' . $purchase_details->sku . ')';
         }
 
         $output = [
