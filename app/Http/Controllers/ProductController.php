@@ -407,9 +407,65 @@ class ProductController extends Controller
          
         
        $show_arabic_product_name = Business::where('id',$business_id)->first()->show_arabic_product_name;
+
+       $category_type = 'product';
+        if ($category_type == 'product' && !auth()->user()->can('category.view') && !auth()->user()->can('category.create')) {
+            abort(403, 'Unauthorized action.');
+        }
+        $business_id = request()->session()->get('user.business_id');
+
+        $module_category_data = $this->moduleUtil->getTaxonomyData($category_type);
+
+        $categories = Category::where('business_id', $business_id)
+                        ->where('parent_id', 0)
+                        ->where('category_type', $category_type)
+                        ->select(['name', 'short_code', 'id'])
+                        ->get();
+
+        $parent_categories = [];
+        if (!empty($categories)) {
+            foreach ($categories as $category) {
+                $parent_categories[$category->id] = $category->name;
+            }
+        }
+
     //   dump($show_arabic_product_name);
         return view('product.create')
-            ->with(compact('categories', 'brands', 'units', 'taxes', 'barcode_types', 'default_profit_percent', 'tax_attributes', 'barcode_default', 'business_locations', 'duplicate_product', 'sub_categories', 'rack_details', 'selling_price_group_count', 'module_form_parts', 'product_types', 'common_settings', 'warranties', 'pos_module_data','show_arabic_product_name'));
+            ->with(compact('categories', 'brands', 'units', 'taxes', 'barcode_types', 'default_profit_percent', 'tax_attributes', 'barcode_default', 'business_locations', 'duplicate_product', 'sub_categories', 'rack_details', 'selling_price_group_count', 'module_form_parts', 'product_types', 'common_settings', 'warranties', 'pos_module_data','show_arabic_product_name','parent_categories', 'module_category_data', 'category_type'));
+    }
+
+
+    public function categoryQuickAdd(Request $request){
+        // return $request;
+        $category_type = request()->input('category_type');
+        if ($category_type == 'product' && !auth()->user()->can('category.view') && !auth()->user()->can('category.create')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        try {
+            $input = $request->only(['name', 'short_code', 'category_type', 'description']);
+            if (!empty($request->input('add_as_sub_cat')) &&  $request->input('add_as_sub_cat') == 1 && !empty($request->input('parent_id'))) {
+                $input['parent_id'] = $request->input('parent_id');
+            } else {
+                $input['parent_id'] = 0;
+            }
+            $input['business_id'] = $request->session()->get('user.business_id');
+            $input['created_by'] = $request->session()->get('user.id');
+
+            $category = Category::create($input);
+            $output = ['success' => true,
+                            'data' => $category,
+                            'msg' => __("category.added_success")
+                        ];
+        } catch (\Exception $e) {
+            \Log::emergency("File:" . $e->getFile(). "Line:" . $e->getLine(). "Message:" . $e->getMessage());
+            
+            $output = ['success' => false,
+                            'msg' => __("messages.something_went_wrong")
+                        ];
+        }
+
+        return $output;
     }
 
     private function product_types()

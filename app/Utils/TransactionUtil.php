@@ -1837,7 +1837,8 @@ class TransactionUtil extends Util
 
             $line_array = [
                 //Field for 1st column
-                'name' => $product->name,
+                'name' => $product->name." -- ".$product->arabic_name,
+                // 'arabic_name' => $product->arabic_name,
                 'variation' => (empty($variation->name) || $variation->name == 'DUMMY') ? '' : $variation->name,
                 'product_variation' => (empty($product_variation->name) || $product_variation->name == 'DUMMY') ? '' : $product_variation->name,
                 //Field for 2nd column
@@ -1970,7 +1971,7 @@ class TransactionUtil extends Util
 
                     $modifier_line_array = [
                         //Field for 1st column
-                        'name' => $product->name,
+                        'name' => $product->name." -- ".$product->arabic_name,
                         'variation' => (empty($variation->name) || $variation->name == 'DUMMY') ? '' : $variation->name,
                         //Field for 2nd column
                         'quantity' => $this->num_f($modifier_line->quantity, false, $business_details),
@@ -2051,7 +2052,7 @@ class TransactionUtil extends Util
 
             $line_array = [
                 //Field for 1st column
-                'name' => $product->name,
+                'name' => $product->name." -- ".$product->arabic_name,
                 'variation' => (empty($variation->name) || $variation->name == 'DUMMY') ? '' : $variation->name,
                 //Field for 2nd column
                 'quantity' => $this->num_f($line->quantity_returned, false, $business_details, true),
@@ -2208,7 +2209,7 @@ class TransactionUtil extends Util
                             ->where('transactions.business_id', $business_id)
                             ->where('transactions.id', $transaction_id)
                             ->where('transactions.type', 'purchase')
-                            ->select('p.id as product_id', 'p.name as product_name', 'v.id as variation_id', 'v.name as variation_name', 'pl.quantity as quantity', 'pl.exp_date', 'pl.lot_number')
+                            ->select('p.id as product_id', 'p.name as product_name', 'p.arabic_name as arabic_name', 'v.id as variation_id', 'v.name as variation_name', 'pl.quantity as quantity', 'pl.exp_date', 'pl.lot_number')
                             ->get();
         return $products;
     }
@@ -3102,7 +3103,7 @@ class TransactionUtil extends Util
                 //If overselling not allowed through exception else create mapping with blank purchase_line_id
                 if (!$allow_overselling) {
                     $variation = Variation::find($line->variation_id);
-                    $mismatch_name = $product->name;
+                    $mismatch_name = $product->name." -- ".$product->arabic_name;
                     if (!empty($variation->sub_sku)) {
                         $mismatch_name .= ' ' . 'SKU: ' . $variation->sub_sku;
                     }

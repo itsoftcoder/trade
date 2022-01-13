@@ -178,7 +178,7 @@
             <tr>
               <td>{{ $loop->iteration }}</td>
               <td>
-                {{ $purchase_line->product->name }}
+                {{ $purchase_line->product->name }} -- {{ $purchase_line->product->arabic_name }}
                  @if( $purchase_line->product->type == 'variable')
                   - {{ $purchase_line->variations->product_variation->name}}
                   - {{ $purchase_line->variations->name}}

@@ -1,7 +1,7 @@
 @forelse ($products as $product)
     <tr>
         <td>
-            {{$product->product_name}}
+            {{$product->product_name}} -- {{ $product->arabic_name }}
 
             @if($product->variation_name != "DUMMY")
                 <b>{{$product->variation_name}}</b>
@@ -28,6 +28,9 @@
         <td>
             <input type="text" class="form-control label-date-picker"
             name="products[{{$loop->index + $index}}][packing_date]" value="">
+        </td>
+        <td>
+            <button type="button" class="btn btn-danger btn-sm remove-searching-product-for-barcode-label"><i class="fa fa-minus"></i></button>
         </td>
     </tr>
 @empty

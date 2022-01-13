@@ -101,6 +101,7 @@ class TaxonomyController extends Controller
             }
         }
 
+        
         return view('taxonomy.create')
                     ->with(compact('parent_categories', 'module_category_data', 'category_type'));
     }

@@ -75,13 +75,13 @@
         </p>
     </div>
     <div class="border-top textbox-info">
-        <p class="f-left"><strong>{!! $receipt_details->invoice_no_prefix !!}</strong></p>
+        <p class="f-left"><strong>{!! $receipt_details->invoice_no_prefix !!} -- رقم الفاتورة</strong></p>
         <p class="f-right">
             {{$receipt_details->invoice_no}}
         </p>
     </div>
     <div class="textbox-info">
-        <p class="f-left"><strong>{!! $receipt_details->date_label !!}</strong></p>
+        <p class="f-left"><strong>{!! $receipt_details->date_label !!} -- تاريخ</strong></p>
         <p class="f-right">
             {{$receipt_details->invoice_date}}
         </p>
@@ -191,16 +191,28 @@
 <!-- customer info -->
     <div class="textbox-info">
         <p style="vertical-align: top;"><strong>
-                {{$receipt_details->customer_label ?? ''}}
+                {{$receipt_details->customer_label ?? ''}} -- عميل
             </strong></p>
 
         <p>
         @if(!empty($receipt_details->customer_info))
+        <div class="bw">
+            {!! $receipt_details->customer_name !!}
+        </div>
+    
+        @endif
+        </p>
+
+        <p>
+            @if(!empty($receipt_details->customer_info))
             <div class="bw">
-                {!! $receipt_details->customer_info !!}
+               <b>Mobile التليفون المحمول
+:              </b> {!! $receipt_details->customer_mobile !!}
             </div>
+        
             @endif
             </p>
+
     </div>
 
     @if(!empty($receipt_details->client_id_label))
@@ -215,13 +227,14 @@
     @endif
 
     @if(!empty($receipt_details->customer_tax_label))
-        <div class="textbox-info">
-            <p class="f-left"><strong>
-                    {{ $receipt_details->customer_tax_label }}
-                </strong></p>
-            <p class="f-right">
+        <div class="">
+            <p>
+                <strong>
+                    ضريب {{ $receipt_details->customer_tax_label}}  
+                </strong>
+            {{-- <b>Tax ضريبة :</b>
                 {{ $receipt_details->customer_tax_number }}
-            </p>
+            </p> --}}
         </div>
     @endif
 
@@ -322,7 +335,7 @@
                 <td class="description">
                     <div style="display:flex; width: 100%;">
                         <p class="m-0 mt-5" style="white-space: nowrap;">#{{$loop->iteration}}.&nbsp;</p>
-                        <p class="text-left m-0 mt-5 pull-left">{{$line['name']}}
+                        <p class="text-left m-0 mt-5 pull-left">{{$line['name'] }}
                             @if(!empty($line['sub_sku'])), {{$line['sub_sku']}} @endif @if(!empty($line['brand'])), {{$line['brand']}} @endif @if(!empty($line['cat_code']))
                                 , {{$line['cat_code']}}@endif
                             @if(!empty($line['product_custom_fields'])), {{$line['product_custom_fields']}} @endif
@@ -420,7 +433,7 @@
     @if(empty($receipt_details->hide_price))
         <div class="flex-box">
             <p class="left text-left">
-                <strong>{!! $receipt_details->subtotal_label !!}</strong>
+                <strong>{!! $receipt_details->subtotal_label !!} --- المجموع الفرعي</strong>
             </p>
             <p class="width-50 text-right">
                 <strong>{{$receipt_details->subtotal}}</strong>
@@ -504,7 +517,7 @@
         @if( !empty($receipt_details->tax) )
             <div class="flex-box">
                 <p class="width-50 text-left">
-                    {!! $receipt_details->tax_label !!}
+                    {!! $receipt_details->tax_label !!} --- الضريبة (15 بالمائة ضريبة القيمة المضافة):
                 </p>
                 <p class="width-50 text-right">
                     (+) {{$receipt_details->tax}}
@@ -525,7 +538,7 @@
 
         <div class="flex-box">
             <p class="width-50 text-left">
-                <strong>{!! $receipt_details->total_label !!}</strong>
+                <strong>{!! $receipt_details->total_label !!} --- مجموع</strong>
             </p>
             <p class="width-50 text-right">
                 <strong>{{$receipt_details->total}}</strong>
@@ -541,8 +554,9 @@
         @if(!empty($receipt_details->payments))
             @foreach($receipt_details->payments as $payment)
                 <div class="flex-box">
-                    <p class="width-50 text-left">{{$payment['method']}} ({{$payment['date']}}) </p>
+                    <p class="width-50 text-left"> السيولة النقدية --- {{$payment['method']}}  ({{$payment['date']}}) </p>
                     <p class="width-50 text-right">{{$payment['amount']}}</p>
+
                 </div>
             @endforeach
         @endif
@@ -550,7 +564,7 @@
         @if(!empty($receipt_details->total_paid))
             <div class="flex-box">
                 <p class="width-50 text-left">
-                    {!! $receipt_details->total_paid_label !!}
+                    {!! $receipt_details->total_paid_label !!} --- مجموع المبالغ المدفوعة
                 </p>
                 <p class="width-50 text-right">
                     {{$receipt_details->total_paid}}
@@ -617,14 +631,23 @@
     @endif
 
     {{-- Barcode --}}
-    @if($receipt_details->show_barcode)
-        <br/>
-        <img class="center-block" src="data:image/png;base64,{{DNS1D::getBarcodePNG($receipt_details->invoice_no, 'C128', 2,30,array(39, 48, 54), true)}}">
-    @endif
+    <div class="row" style="display: flex; justify-content:space-between;">
+        <div class="col-sm-6">
+            @if($receipt_details->show_barcode)
+            <br/>
+            <img class="" src="data:image/png;base64,{{DNS1D::getBarcodePNG($receipt_details->invoice_no, 'C128', 2,30,array(39, 48, 54), true)}}">
+        @endif
+        </div>
 
-    @if($receipt_details->show_qr_code && !empty($receipt_details->qr_code_text))
-        <img class="center-block mt-5" src="data:image/png;base64,{{DNS2D::getBarcodePNG($receipt_details->qr_code_text, 'QRCODE')}}">
-    @endif
+        <div class="col-sm-6">
+            @if($receipt_details->show_qr_code && !empty($receipt_details->qr_code_text))
+                <img class="mt-5" src="data:image/png;base64,{{DNS2D::getBarcodePNG($receipt_details->qr_code_text, 'QRCODE')}}">
+            @endif
+        </div>
+    </div>
+   
+
+    
 
     @if(!empty($receipt_details->footer_text))
         <p class="centered">

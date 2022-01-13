@@ -9,7 +9,7 @@
 			value="{{$so_line->id}}">
 		@endif
 		@php
-			$product_name = $product->product_name . '<br/>' . $product->sub_sku ;
+			$product_name = $product->product_name.' '.$product->arabic_name . '<br/>' . $product->sub_sku ;
 			if(!empty($product->brand)){ $product_name .= ' ' . $product->brand ;}
 		@endphp
 

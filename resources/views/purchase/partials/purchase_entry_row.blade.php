@@ -2,7 +2,7 @@
     <tr @if(!empty($purchase_order_line)) data-purchase_order_id="{{$purchase_order_line->transaction_id}}" @endif>
         <td><span class="sr_number"></span></td>
         <td>
-            {{ $product->name }} ({{$variation->sub_sku}})
+            {{ $product->name }} -- {{ $product->arabic_name }} ({{$variation->sub_sku}})
             @if( $product->type == 'variable' )
                 <br/>
                 (<b>{{ $variation->product_variation->name }}</b> : {{ $variation->name }})

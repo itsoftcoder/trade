@@ -56,6 +56,7 @@ class LabelsController extends Controller
         $default = $barcode_settings->where('is_default', 1)->first();
         $barcode_settings = $barcode_settings->pluck('name', 'id');
 
+        // dump($products);
         return view('labels.show')
             ->with(compact('products', 'barcode_settings', 'default'));
     }

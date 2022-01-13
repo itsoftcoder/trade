@@ -43,7 +43,7 @@
        
 
 		@page {
-			margin: 20px 30px;
+			margin: 20px 25px;
 		}
 
 		table.table-bordered {
@@ -85,6 +85,12 @@
     @include('includes.number-to-word')
     <?php 
     $number_to_word = new NumberToWords();    
+
+								
+	$western_arabic = array('0','1','2','3','4','5','6','7','8','9');
+	$eastern_arabic = array('٠','١','٢','٣','٤','٥','٦','٧','٨','٩');
+                                
+								
     ?>
 
 	<div class="page-header" style="text-align: center">
@@ -484,7 +490,7 @@
 						$p_width -= 25;
 						@endphp
 						@endif
-						<table class="table table-bordered table-responsive" style="border-color: black !important;" id="content">
+						<table class="table table-bordered table-responsive"  style="border-color: black !important; position: relative;" id="content">
 							<thead>
 								<tr class="bg-primary text-white">
 									<th width="8%" class="text-center">SL NO.<br>الرقم التسلسلي</th>
@@ -514,7 +520,7 @@
 							
 								
 								@forelse($receipt_details->lines as $line)
-							     <tr style="border:0 !important; min-height:100px;">
+							     <tr>
 									<td class="text-center">{{ $i++ }}</td>
 									<td style="padding-left: 5px">
 										@if(!empty($line['image']))
@@ -604,6 +610,8 @@
 								       $j = 7;
 								   }elseif($i == 6){
 								       $j = 6;
+								   }elseif($i == 8){
+								       $j = 19;
 								   }else{
 								       $j = 0;
 								   }
@@ -625,12 +633,6 @@
 								
 					
 								
-								<?php 
-								
-								$western_arabic = array('0','1','2','3','4','5','6','7','8','9');
-                                $eastern_arabic = array('٠','١','٢','٣','٤','٥','٦','٧','٨','٩');
-                                
-								?>
 								
 						
 								<tr>
@@ -644,7 +646,7 @@
 						
 					
 					
-						<div class="row">
+						<div class="row" style="position:relative;">
 							<div class="col-xs-6">
 							    <table class="table table-slim" border="1">
 							     <tr>
